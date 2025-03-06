@@ -1,101 +1,97 @@
-import Image from "next/image";
+import MessageBoard from '@/components/messageBoard';
+import Toptitle from '@/components/topTitle';
+import TopicLabel from '@/components/topicLabel';
+import Image from 'next/image';
+import { introdution, access, experience } from '@/contents/messages';
+import MessageBoardY from '@/components/messageBoardY';
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className='w-full'>
+      <div className=' flex flex-col items-center mb-8'>
+        <Toptitle />
+        <div className='bg-green-100 rounded-xl p-4 mt-4 w-[400px] lg:w-[800px]'>
+          <pre className='text-lg whitespace-pre-wrap'>{introdution}</pre>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
+
+      <TopicLabel title='体験' />
+      <div className='flex justify-center mb-8'>
+        <div className='mt-4 grid gap-8 lg:max-w-[900px] xl:max-w-[1300px] grid-cols-1 lg:grid-cols-2 xl:grid-cols-3'>
+          <MessageBoard title='つくる' text={experience.make}>
+            <Image
+              src='/taiken-1.png'
+              width={480 / 2}
+              height={200 / 2}
+              alt={'taiken-1'}
+              className='relative top-4'
+            />
+          </MessageBoard>
+          <MessageBoard title='あそぶ' text={experience.play}>
+            <Image
+              src='/taiken-2.png'
+              width={350 / 2.5}
+              height={220 / 2.5}
+              alt={'taiken-2'}
+              className='relative left-20 -top-16 xs:top-0'
+            />
+          </MessageBoard>
+          <MessageBoard title='まなぶ' text={experience.learn}>
+            <Image
+              src='/taiken-3.png'
+              width={400 / 1.7}
+              height={169 / 1.7}
+              alt={'taiken-3'}
+              className='relative -top-4 xs:top-0'
+            />
+          </MessageBoard>
+          <MessageBoardY title='充実した設備をご用意しております' text={experience.facility}>
+            <Image
+              src='/taiken-4.png'
+              width={284 / 2}
+              height={204 / 2}
+              alt={'taiken-4'}
+              className='relative -top-8 xs:top-2 left-16'
+            />
+          </MessageBoardY>
+          <MessageBoardY title='プライベートパーク利用' text={experience.privatePark}>
+            <Image
+              src='/remotework.jpg'
+              width={640 / 4}
+              height={480 / 4}
+              alt={'taiken-5'}
+              className='rounded-lg'
+            />
+          </MessageBoardY>
+        </div>
+      </div>
+      <TopicLabel title='アクセス' />
+      <div className='flex flex-col mb-8'>
+        <iframe
+          src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2565.0407512517363!2d139.660448891735!3d35.89113519827244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6018c1a19204a663%3A0xbdfb95dfe12b7a01!2z6Iqx6YeO6I-c6L6y5ZyS!5e0!3m2!1sja!2sjp!4v1741101175985!5m2!1sja!2sjp'
+          className='w-full h-[420px] border-2 border-gray-300 rounded-lg'
+          loading='lazy'
+        />
+        <div className='w-full text-lg bg-green-100 rounded-xl p-4 mt-4'>
+          <pre className='text-lg text-left'>{access.address}</pre>
+          <pre className='text-sm xs:text-lg text-left mt-2'>{access.byCar}</pre>
+          <pre className='text-sm xs:text-lg whitespace-pre-wrap text-left mt-2'>
+            {access.byTrain}
+          </pre>
+        </div>
+      </div>
+
+      <TopicLabel title='お気軽にお問い合わせください' />
+      <div className='mt-4 grid gap-8 lg:max-w-[900px] xl:max-w-[1300px] grid-cols-1 lg:grid-cols-2 xl:grid-cols-3'>
+        <div className='text-xl leading-10'>
+          <p>花野菜農園倶楽部 担当：金子</p>
+          <p>０８０−９３８９−９７５０</p>
+          <p>受付 : 10:00〜18:00（土日祝も受付中）</p>
+          <p>
+            Email : <a href='mailto:info@hanayasainouen.com'>info@hanayasainouen.com</a>
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
