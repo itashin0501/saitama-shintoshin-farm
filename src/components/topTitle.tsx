@@ -25,7 +25,7 @@ export default function TopTitle() {
         />
       </div>
 
-      <Image src='/top.jpg' width={976 / 2} height={545 / 2} alt={'top'} className='rounded-xl' />
+      <Image src='/TOP.jpg' width={976 / 2} height={545 / 2} alt={'top'} className='rounded-xl' />
     </div>
   );
 }
