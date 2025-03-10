@@ -1,5 +1,5 @@
 import MessageBoard from '@/components/messageBoard';
-import Toptitle from '@/components/topTitle';
+import Toptitle from '@/components/hanayasai/topTitle';
 import TopicLabel from '@/components/topicLabel';
 import Image from 'next/image';
 import { introdution, access, experience } from '@/contents/messages';
@@ -18,7 +18,7 @@ export default function Home() {
       <TopicLabel title='体験' />
       <div className='flex justify-center mb-8'>
         <div className='mt-4 grid gap-8 lg:max-w-[900px] xl:max-w-[1300px] grid-cols-1 lg:grid-cols-2 xl:grid-cols-3'>
-          <MessageBoard title='つくる' text={experience.make}>
+          <MessageBoard title='えらぶ' text={experience.make}>
             <Image
               src='/taiken-1.png'
               width={480 / 2}
