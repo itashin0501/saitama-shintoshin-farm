@@ -4,15 +4,14 @@
 
 :root {
   --background: #eff7e1;
+  --background2: rgb(247, 231, 225);
   --foreground: #444444;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: 'Tsukimi Rounded-Bold', Helvetica, Arial, sans-serif;
+a {
+  @apply text-blue-500;
 }
 
-a {
-  @apply text-blue-500 underline;
+img {
+  max-height: 100%;
 }
