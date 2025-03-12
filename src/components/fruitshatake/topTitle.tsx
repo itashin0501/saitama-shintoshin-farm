@@ -3,10 +3,10 @@ import Image from 'next/image';
 export default function TopTitle({ subTitle = true }: Readonly<{ subTitle?: boolean }>) {
   return (
     <div className='w-full flex flex-col gap-4 mb-8 items-center'>
-      <div className='flex justify-center space-x-8 h-26'>
+      <div className='flex justify-center h-26'>
         <Image
           src='/0034.png'
-          className='hidden sm:block'
+          className='hidden mr-4 sm:block'
           width={172 / 2}
           height={200 / 2}
           alt={''}
@@ -22,7 +22,7 @@ export default function TopTitle({ subTitle = true }: Readonly<{ subTitle?: bool
           )}
           <Image
             src='/fruitshatakeTitleLogo.png'
-            className={subTitle ? 'my-0' : 'my-4'}
+            className={'object-contain h-12 sm:h-16 ' + (subTitle ? 'my-0' : 'my-4')}
             width={1248 / 3}
             height={171 / 3}
             alt={'title'}
@@ -30,7 +30,7 @@ export default function TopTitle({ subTitle = true }: Readonly<{ subTitle?: bool
         </div>
         <Image
           src='/0106.png'
-          className='hidden sm:block'
+          className='hidden ml-4 sm:block'
           width={197 / 2}
           height={200 / 2}
           alt={''}

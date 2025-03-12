@@ -14,14 +14,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='ja'>
-      <body>
-        <Header />
-        <main className='flex flex-col min-h-screen mx-4 md:mx-8 items-center sm:items-start'>
-          {children}
-        </main>
-        <Footer text='花野菜農園' />
-      </body>
-    </html>
+    <>
+      <Header />
+      <div className='flex flex-col min-h-screen mx-4 md:mx-8 items-center sm:items-start'>
+        {children}
+      </div>
+      <Footer text='花野菜農園' />
+    </>
   );
 }
