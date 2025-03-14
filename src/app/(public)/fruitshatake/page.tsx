@@ -19,13 +19,7 @@ export default function Home() {
       <div className='flex justify-center mb-8'>
         <div className='mt-4 grid gap-8 lg:max-w-[900px] xl:max-w-[1300px] grid-cols-1 lg:grid-cols-2 xl:grid-cols-3'>
           <MessageBoard title='えらぶ' text={experience.select}>
-            <Image
-              src='/taiken-1.png'
-              width={480 / 2}
-              height={200 / 2}
-              alt={'taiken-1'}
-              className='relative top-4'
-            />
+            <Image src='/taiken-1.png' width={480 / 2} height={200 / 2} alt={'taiken-1'} />
           </MessageBoard>
           <MessageBoard title='そだてる' text={experience.nurture}>
             <Image

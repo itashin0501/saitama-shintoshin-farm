@@ -13,7 +13,7 @@ export default function MessageBoard({ title, text, children }: Props) {
         <MenuTitle title={title} />
       </div>
       <pre className='text-lg px-6 py-4 break-normal whitespace-pre-wrap'>{text}</pre>
-      {children}
+      <div className='mt-auto pb-4'>{children}</div>
     </div>
   );
 }

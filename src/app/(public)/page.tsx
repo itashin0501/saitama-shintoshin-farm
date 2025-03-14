@@ -12,20 +12,28 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <div className='w-full'>
+    <div className='w-full text-center'>
       <Header />
-      <div className='grid grid-cols-1 xl:grid-cols-2 mb-8 text-center'>
+      <div className='mb-8'>
         <p className='underline text-lg sm:text-2xl whitespace-nowrap text-[#444444]'>
           プライベートパーク付きレンタル農園
         </p>
         <p className='font-bold text-lg sm:text-xl no-underline text-[#444444]'>さいたま新都心</p>
-        <Link href='/hanayasai'>
-          <Hanayasai subTitle={false} />
-        </Link>
-        <Link href='/fruitshatake'>
-          <Fruhata subTitle={false} />
-        </Link>
       </div>
+
+      <div className='grid grid-cols-1 xl:grid-cols-2 text-center'>
+        <div>
+          <Link href='/hanayasai'>
+            <Hanayasai subTitle={false} />
+          </Link>
+        </div>
+        <div>
+          <Link href='/fruitshatake'>
+            <Fruhata subTitle={false} />
+          </Link>
+        </div>
+      </div>
+
       <Footer text='花野菜農園・フルーツとやさい畑' />
     </div>
   );

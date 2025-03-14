@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
 import '@/app/globals.css';
+import Favicon from '../../public/faviconH.ico';
 
 export const metadata: Metadata = {
   title: '花野菜農園・フルーツとやさい畑',
   description: 'さいたま新都心・浦和 / プライベートパーク付きレンタル農園',
+  icons: [{ rel: 'icon', url: Favicon.src }],
 };
 
 export default function RootLayout({
@@ -13,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='ja'>
-      <body>
+      <body className='min-h-screen'>
         <> {children}</>
       </body>
     </html>
