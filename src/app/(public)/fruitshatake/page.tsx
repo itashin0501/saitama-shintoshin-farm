@@ -19,20 +19,20 @@ export default function Home() {
       <div className='flex justify-center mb-8'>
         <div className='mt-4 grid gap-8 lg:max-w-[900px] xl:max-w-[1300px] grid-cols-1 lg:grid-cols-2 xl:grid-cols-3'>
           <MessageBoard title='えらぶ' text={experience.select}>
-            <Image src='/taiken-1.png' width={480 / 2} height={200 / 2} alt={'taiken-1'} />
+            <Image src='/taikenf-1.png' width={480 / 1.5} height={200 / 1.5} alt={'taiken-1'} />
           </MessageBoard>
           <MessageBoard title='そだてる' text={experience.nurture}>
             <Image
-              src='/taiken-2.png'
-              width={350 / 2.5}
-              height={220 / 2.5}
+              src='/taikenf-2.png'
+              width={350 / 1.8}
+              height={220 / 1.8}
               alt={'taiken-2'}
-              className='relative left-20 -top-16 xs:top-0'
+              className='relative left-20 top-0'
             />
           </MessageBoard>
           <MessageBoard title='まなぶ' text={experience.learn}>
             <Image
-              src='/taiken-3.png'
+              src='/taikenf-3.png'
               width={400 / 1.7}
               height={169 / 1.7}
               alt={'taiken-3'}
@@ -50,9 +50,9 @@ export default function Home() {
           </MessageBoardY>
           <MessageBoardY title='プライベートパーク利用' text={experience.privatePark}>
             <Image
-              src='/remotework.jpg'
-              width={640 / 4}
-              height={480 / 4}
+              src='/pizza.jpg'
+              width={1000 / 3.5}
+              height={400 / 3.5}
               alt={'taiken-5'}
               className='rounded-lg'
             />
