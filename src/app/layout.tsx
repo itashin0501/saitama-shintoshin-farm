@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import '@/app/globals.css';
+import { AnalyticsProvider } from '@/components/AnalyticsProvider';
 import Favicon from '../../public/faviconH.ico';
 
 export const metadata: Metadata = {
@@ -16,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang='ja'>
       <body className='min-h-screen'>
-        <> {children}</>
+        <AnalyticsProvider>{children}</AnalyticsProvider>
       </body>
     </html>
   );
