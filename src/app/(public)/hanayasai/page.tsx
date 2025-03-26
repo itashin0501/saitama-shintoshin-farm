@@ -27,7 +27,7 @@ export default function Home() {
               width={350 / 2.5}
               height={220 / 2.5}
               alt={'taiken-2'}
-              className='relative left-20 top-0'
+              className='relative left-20 -top-16 xs:top-0'
             />
           </MessageBoard>
           <MessageBoard title='まなぶ' text={experience.learn}>

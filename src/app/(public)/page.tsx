@@ -21,7 +21,7 @@ export default function Home() {
         <p className='font-bold text-lg sm:text-xl no-underline text-[#444444]'>さいたま新都心</p>
       </div>
 
-      <div className='grid grid-cols-1 xl:grid-cols-2 text-center'>
+      <div className='grid grid-cols-1 mx-4 xl:grid-cols-2 text-center'>
         <div>
           <Link href='/hanayasai'>
             <Hanayasai subTitle={false} />
