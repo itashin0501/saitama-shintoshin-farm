@@ -8,11 +8,18 @@ import MessageBoardY from '@/components/messageBoardY';
 export default function Home() {
   return (
     <div className='w-full'>
-      <div className=' flex flex-col items-center mb-8'>
+      <div className='flex flex-col items-center mb-8'>
         <Toptitle />
         <div className='bg-green-100 rounded-xl p-4 mt-4 w-[400px] lg:w-[800px]'>
           <pre className='text-lg whitespace-pre-wrap'>{introdution}</pre>
         </div>
+      </div>
+
+      <TopicLabel title='おしらせ' />
+      <div className='flex flex-col text-lg p-6 bg-white rounded-xl justify-center mx-auto mb-8 w-[400px] lg:w-[800px]'>
+        <p className='underline'>2025/04/13(日)</p>
+        <p className='font-bold'>農園説明会を開催します。</p>
+        <p className='ml-2'>午前10:30〜11;30、午後13:30〜15:30 現地でご案内いたします。</p>
       </div>
 
       <TopicLabel title='体験' />
