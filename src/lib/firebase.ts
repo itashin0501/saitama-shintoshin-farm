@@ -1,5 +1,6 @@
 import { initializeApp, FirebaseApp } from 'firebase/app';
 import { getAnalytics, Analytics, isSupported } from 'firebase/analytics';
+// import { getFirestore } from 'firebase/firestore';
 import firebase from 'firebase/compat/app';
 
 const firebaseConfig = {
@@ -30,4 +31,8 @@ if (typeof window !== 'undefined') {
   });
 }
 
-export { app, analytics };
+// Firestore
+// let firestore:Firestos
+// const db = getFirestore(app);
+
+export { app, analytics};
