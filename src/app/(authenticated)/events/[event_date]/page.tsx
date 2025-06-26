@@ -13,6 +13,7 @@ import ChildCareIcon from "@mui/icons-material/ChildCare";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import BackpackIcon from "@mui/icons-material/Backpack";
 import PhoneIcon from "@mui/icons-material/Phone";
+import Slideshow from "@/components/Slideshow";
 
 export default function EventDatePage() {
   //   const params = useParams();
@@ -73,6 +74,22 @@ export default function EventDatePage() {
           <p className="text-xl text-gray-600">
             みんなでワイワイ！ピザ窯イベント
           </p>
+        </div>
+      </div>
+      <div className="flex justify-center mb-8">
+        <div className="w-full max-w-3xl">
+          <div className="relative">
+            {/* Simple slideshow without external dependencies */}
+            {/* You can replace the image paths with your own */}
+            <Slideshow
+              images={[
+                "https://firebasestorage.googleapis.com/v0/b/fruits-hatake.firebasestorage.app/o/farmEntrance.jpg?alt=media&token=73bf8535-4fde-4ba1-8ca2-4b890fcf4348",
+                "https://firebasestorage.googleapis.com/v0/b/fruits-hatake.firebasestorage.app/o/12129.jpg?alt=media&token=be894823-8dbb-477f-be1b-e2a75a0ca537",
+                "https://firebasestorage.googleapis.com/v0/b/fruits-hatake.firebasestorage.app/o/potato.jpg?alt=media&token=c5f3a7a2-6f78-4648-960d-e9bcfc49bc94",
+                "https://firebasestorage.googleapis.com/v0/b/fruits-hatake.firebasestorage.app/o/privatepark.jpg?alt=media&token=f771e00a-6b93-46d1-b60f-d2e715338d9c",
+              ]}
+            />
+          </div>
         </div>
       </div>
 
@@ -156,6 +173,13 @@ export default function EventDatePage() {
                 />
                 お飲み物各種
               </li>
+              <li className="flex items-center">
+                <CheckCircleIcon
+                  className="text-green-500 mr-3"
+                  fontSize="small"
+                />
+                食器や手洗い用の水（タンクに水道水を入れて準備します）
+              </li>
             </ul>
           </div>
 
@@ -177,6 +201,13 @@ export default function EventDatePage() {
                   className="text-orange-500 mr-3"
                   fontSize="small"
                 />
+                コップやお皿等の食器類
+              </li>
+              <li className="flex items-center">
+                <BackpackIcon
+                  className="text-orange-500 mr-3"
+                  fontSize="small"
+                />
                 レジャーシート
               </li>
               <li className="flex items-center">
@@ -191,15 +222,26 @@ export default function EventDatePage() {
         </div>
       </div>
 
+      <div className="bg-yellow-50 rounded-lg shadow-lg p-6 mb-8">
+        <h3 className="text-xl font-bold text-yellow-700 mb-2 flex items-center">
+          ゴミのお持ち帰りのお願い
+        </h3>
+        <p className="text-gray-700">
+          イベント終了後は、各自でゴミのお持ち帰りにご協力をお願いいたします。
+          <br />
+          皆様が気持ちよくご利用いただけるよう、ご理解とご協力をお願いいたします。
+        </p>
+      </div>
+
       <div className="bg-green-600 text-white rounded-lg shadow-lg p-8 text-center">
         <h3 className="text-2xl font-bold mb-4 flex items-center justify-center">
           <PhoneIcon className="mr-2" />
           参加ご希望の方
         </h3>
         <div className="bg-white text-green-600 inline-block px-6 py-3 rounded-lg font-semibold">
-          フルーツとやさい畑 ： LINEにて参加人数をお知らせください。
+          フルーツとやさい畑 : LINEにて参加人数をお知らせください。
           <br />
-          花野菜農園 ； メールまたは電話でも受け付けております。
+          花野菜農園 : メールまたは電話でも受け付けております。
         </div>
       </div>
     </div>
