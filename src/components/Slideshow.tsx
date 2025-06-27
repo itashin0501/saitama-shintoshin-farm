@@ -13,38 +13,19 @@ export default function Slideshow({ images }: { images: string[] }) {
   }, [images.length]);
 
   return (
-    <div
-      className="flex overflow-x-auto gap-4 items-center"
-      style={{
-        scrollSnapType: "x mandatory",
-        height: "180px", // 高さを一定に
-      }}
-      ref={(el) => {
-        if (el) {
-          const focused = el.children[index] as HTMLElement;
-          if (focused) {
-            focused.scrollIntoView({
-              behavior: "smooth",
-              inline: "center",
-              block: "nearest",
-            });
-          }
-        }
-      }}
-    >
+    <div className="flex gap-4 items-center justify-center overflow-hidden h-[220px] sm:h-[360px]">
       {images.map((src, i) => (
         <div
           key={src}
-          className={`transition-opacity duration-700 flex-shrink-0`}
+          className={
+            "transition-opacity duration-700 flex-shrink-0 h-[220px] sm:h-[360px]"
+          }
           style={{
-            width: "320px",
-            height: "160px",
             opacity: i === index ? 1 : 0.4,
-            scrollSnapAlign: "center",
             border: i === index ? "3px solid #38bdf8" : "none",
             borderRadius: "12px",
             background: "#eee",
-            display: "flex",
+            display: i === index ? "flex" : "none", // 中央の画像だけ表示
             alignItems: "center",
             justifyContent: "center",
           }}
