@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>花火鑑賞の夕べ - 花野菜農園＆フルーツとやさい畑</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", Meiryo,
+          sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background: #1e3a5f;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 40px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .fireworks-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0.05;
+        pointer-events: none;
+      }
+
+      .firework {
+        position: absolute;
+        width: 3px;
+        height: 3px;
+        background: #1e3a5f;
+        border-radius: 50%;
+        animation: sparkle 3s infinite ease-in-out;
+      }
+
+      @keyframes sparkle {
+        0%,
+        100% {
+          opacity: 0;
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .main-card {
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .main-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: #1e3a5f;
+      }
+
+      @keyframes rotate {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .content {
+        position: relative;
+        z-index: 1;
+      }
+
+      .title {
+        font-size: 2.5rem;
+        color: #1e3a5f;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
+        color: #5a7a9a;
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      .event-info {
+        margin-bottom: 40px;
+      }
+
+      .info-text {
+        background: #f8f9fa;
+        padding: 30px;
+        border-radius: 15px;
+        border-left: 5px solid #667eea;
+      }
+
+      .info-text h3 {
+        color: #2c3e50;
+        margin-bottom: 20px;
+        font-size: 1.5rem;
+      }
+
+      .info-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .info-table td {
+        padding: 12px 0;
+        border-bottom: 1px solid #e9ecef;
+        vertical-align: top;
+      }
+
+      .info-table td.label {
+        font-weight: bold;
+        color: #495057;
+        width: 120px;
+        padding-right: 20px;
+      }
+
+      .info-table td:last-child {
+        color: #333;
+      }
+
+      .info-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .schedule {
+        background: #f8f9fa;
+        padding: 30px;
+        border-radius: 15px;
+        margin: 30px 0;
+        border-left: 5px solid #ff6b6b;
+      }
+
+      .schedule h3 {
+        color: #2c3e50;
+        margin-bottom: 20px;
+        font-size: 1.5rem;
+      }
+
+      .schedule-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .time {
+        background: #ff6b6b;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-weight: bold;
+        margin-right: 20px;
+        min-width: 120px;
+        text-align: center;
+      }
+
+      .activity {
+        flex: 1;
+        font-size: 1.1rem;
+      }
+
+      .important {
+        background: #e8f4f8;
+        border: 2px solid #5a7a9a;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+      }
+
+      .important h4 {
+        color: #1e3a5f;
+        margin-bottom: 10px;
+      }
+
+      .contact-info {
+        background: #f8f9fa;
+        padding: 25px;
+        border-radius: 15px;
+        margin: 30px 0;
+        border-left: 5px solid #1e3a5f;
+      }
+
+      .contact-info h4 {
+        color: #1e3a5f;
+        margin-bottom: 15px;
+      }
+
+      .organizers {
+        text-align: center;
+        margin-top: 40px;
+        padding: 25px;
+        background: #1e3a5f;
+        color: white;
+        border-radius: 15px;
+      }
+
+      .organizers h4 {
+        margin-bottom: 10px;
+        color: white;
+      }
+
+      .icon {
+        font-size: 2rem;
+        margin-bottom: 15px;
+      }
+
+      .fireworks-photo {
+        width: 100%;
+        height: 300px;
+        border-radius: 15px;
+        margin: 20px 0;
+        background-image: url("./fireworks.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        position: relative;
+      }
+
+      .fireworks-photo::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(30, 58, 95, 0.1);
+        border-radius: 15px;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 15px;
+        }
+
+        .main-card {
+          padding: 25px;
+        }
+
+        .title {
+          font-size: 2rem;
+        }
+
+        .event-info {
+          margin-bottom: 40px;
+        }
+
+        .schedule-item {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .time {
+          margin-right: 0;
+          margin-bottom: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="fireworks-bg">
+          <div
+            class="firework"
+            style="top: 20%; left: 10%; animation-delay: 0s"
+          ></div>
+          <div
+            class="firework"
+            style="top: 40%; left: 80%; animation-delay: 1s"
+          ></div>
+          <div
+            class="firework"
+            style="top: 60%; left: 30%; animation-delay: 2s"
+          ></div>
+          <div
+            class="firework"
+            style="top: 80%; left: 70%; animation-delay: 0.5s"
+          ></div>
+          <div
+            class="firework"
+            style="top: 30%; left: 60%; animation-delay: 1.5s"
+          ></div>
+        </div>
+      </div>
+
+      <div class="main-card">
+        <div class="content">
+          <h1 class="title">花火鑑賞の夕べ</h1>
+          <p class="subtitle">～ワインとBGMで、大人も楽しめる特別な夜を～</p>
+
+          <div class="section">
+            <p>「花野菜農園」＆「フルーツとやさい畑」メンバーの皆さまへ</p>
+            <p>
+              ここ数日、雨や涼しい気候が続いていますが、皆さまお元気でしょうか？
+            </p>
+            <p>
+              今年も恒例のイベント「花火鑑賞の夕べ」の季節がやってまいりました。
+            </p>
+          </div>
+
+          <div class="fireworks-photo"></div>
+
+          <div class="event-info">
+            <div class="info-text">
+              <h3>開催概要</h3>
+              <table class="info-table">
+                <tr>
+                  <td class="label">開催日</td>
+                  <td>7月27日（日）</td>
+                </tr>
+                <tr>
+                  <td class="label">会場</td>
+                  <td>「花野菜農園」芝生ひろば</td>
+                </tr>
+                <tr>
+                  <td class="label">参加費</td>
+                  <td>
+                    無料<br /><small
+                      >※お飲物・おつまみ・軽食・お皿・コップ等は各自持参</small
+                    >
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="schedule">
+            <h3>📋 タイムスケジュール</h3>
+            <div class="schedule-item">
+              <div class="time">18:30-19:30</div>
+              <div class="activity">
+                <strong>第1部</strong><br />
+                🍷 爽やかな音楽とワインで寛ぎのひと時
+              </div>
+            </div>
+            <div class="schedule-item">
+              <div class="time">19:30-20:30</div>
+              <div class="activity">
+                <strong>第2部</strong><br />
+                🎆 大和田の花火大会を高台の広場から鑑賞
+              </div>
+            </div>
+          </div>
+
+          <div class="important">
+            <p>
+              親睦を深め、みんなで花火を楽しみませんか？<br />
+              今年は「大人も楽しめる夕べのひと時」をテーマに、特別な雰囲気をご用意いたします。
+            </p>
+          </div>
+
+          <div class="contact-info">
+            <h4>📞 参加お申し込み</h4>
+            <p><strong>締切：7月25日まで</strong></p>
+            <p>会場セッティングの準備のため、参加人数をお知らせください。</p>
+            <ul style="margin-top: 10px; padding-left: 20px">
+              <li>📧 メール</li>
+              <li>📱 LINE</li>
+              <li>📞 携帯：080-9389-9750</li>
+            </ul>
+          </div>
+
+          <div class="organizers">
+            <h4>🤝 共催</h4>
+            <p>「花野菜農園」＆「フルーツとやさい畑」</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // 控えめな背景アニメーション効果
+      function createFirework() {
+        const firework = document.createElement("div");
+        firework.className = "firework";
+        firework.style.left = Math.random() * 100 + "%";
+        firework.style.top = Math.random() * 100 + "%";
+        firework.style.animationDelay = Math.random() * 3 + "s";
+
+        document.querySelector(".fireworks-bg").appendChild(firework);
+
+        setTimeout(() => {
+          firework.remove();
+        }, 4000);
+      }
+
+      // 控えめな頻度で背景効果を追加
+      setInterval(createFirework, 3000);
+    </script>
+  </body>
+</html>
