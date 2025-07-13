@@ -39,7 +39,7 @@ export default function EventDatePage() {
     <div>
       <div className="container mx-auto px-4">
         <Image
-          src="/fruitshatakeTitleLogo.png"
+          src="/images/fruitshatakeTitleLogo.png"
           className={"object-contain h-12 sm:h-16 my-4 w-full"}
           width={1248 / 3}
           height={171 / 3}

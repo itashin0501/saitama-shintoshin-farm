@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import '@/app/hanayasai.css';
-import Favicon from '../../../../public/faviconH.ico';
+import Favicon from '../../../../public/images/faviconH.ico';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 

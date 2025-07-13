@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import '@/app/globals.css';
 import { AnalyticsProvider } from '@/components/AnalyticsProvider';
-import Favicon from '../../public/faviconH.ico';
+import Favicon from '../../public/images/faviconH.ico';
 
 export const metadata: Metadata = {
   title: '花野菜農園・フルーツとやさい畑',

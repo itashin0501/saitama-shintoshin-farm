@@ -1,43 +1,55 @@
-import Image from 'next/image';
+import Image from "next/image";
 
-export default function TopTitle({ subTitle = true }: Readonly<{ subTitle?: boolean }>) {
+export default function TopTitle({
+  subTitle = true,
+}: Readonly<{ subTitle?: boolean }>) {
   return (
-    <div className='w-full flex flex-col gap-4 mb-8 items-center'>
-      <div className='flex justify-center h-26'>
+    <div className="w-full flex flex-col gap-4 mb-8 items-center">
+      <div className="flex justify-center h-26">
         <Image
-          src='/0034.png'
-          className='hidden mr-4 sm:block'
+          src="/images/0034.png"
+          className="hidden mr-4 sm:block"
           width={172 / 2}
           height={200 / 2}
-          alt={''}
+          alt={""}
         />
-        <div className='text-center align-middle'>
+        <div className="text-center align-middle">
           {subTitle && (
             <>
-              <p className='underline whitespace-nowrap text-[#444444]'>
+              <p className="underline whitespace-nowrap text-[#444444]">
                 プライベートパーク付きレンタル農園
               </p>
-              <p className='font-bold no-underline text-[#444444]'>さいたま新都心</p>
+              <p className="font-bold no-underline text-[#444444]">
+                さいたま新都心
+              </p>
             </>
           )}
           <Image
-            src='/fruitshatakeTitleLogo.png'
-            className={'object-contain h-12 sm:h-16 ' + (subTitle ? 'my-0' : 'my-4')}
+            src="/images/fruitshatakeTitleLogo.png"
+            className={
+              "object-contain h-12 sm:h-16 " + (subTitle ? "my-0" : "my-4")
+            }
             width={1248 / 3}
             height={171 / 3}
-            alt={'title'}
+            alt={"title"}
           />
         </div>
         <Image
-          src='/0106.png'
-          className='hidden ml-4 sm:block'
+          src="/images/0106.png"
+          className="hidden ml-4 sm:block"
           width={197 / 2}
           height={200 / 2}
-          alt={''}
+          alt={""}
         />
       </div>
 
-      <Image src='/TOPF.jpg' width={960 / 2} height={545 / 2} alt={'top'} className='rounded-xl' />
+      <Image
+        src="/images/topF.jpg"
+        width={960 / 2}
+        height={545 / 2}
+        alt={"top"}
+        className="rounded-xl"
+      />
     </div>
   );
 }

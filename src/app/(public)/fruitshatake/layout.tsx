@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import '@/app/fruitshatake.css';
-import Favicon from '../../../../public/faviconF.ico';
+import Favicon from '../../../../public/images/faviconF.ico';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 
