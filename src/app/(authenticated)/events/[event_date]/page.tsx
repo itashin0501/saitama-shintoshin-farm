@@ -3,7 +3,6 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import Image from "next/image";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import PlaceIcon from "@mui/icons-material/Place";
 import FamilyRestroomIcon from "@mui/icons-material/FamilyRestroom";

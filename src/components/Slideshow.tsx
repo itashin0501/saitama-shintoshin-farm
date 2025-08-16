@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 export default function Slideshow({ images }: { images: string[] }) {
   const [index, setIndex] = useState(0);
@@ -30,11 +31,13 @@ export default function Slideshow({ images }: { images: string[] }) {
             justifyContent: "center",
           }}
         >
-          <img
+          <Image
             src={src}
             alt={`event image ${i + 1}`}
             className="rounded-lg object-cover w-full h-full"
             style={{ minHeight: 0, minWidth: 0 }}
+            width={0}
+            height={0}
           />
         </div>
       ))}
