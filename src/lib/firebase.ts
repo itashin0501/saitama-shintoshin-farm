@@ -1,7 +1,7 @@
-import { initializeApp, FirebaseApp } from 'firebase/app';
-import { getAnalytics, Analytics, isSupported } from 'firebase/analytics';
-// import { getFirestore } from 'firebase/firestore';
-import firebase from 'firebase/compat/app';
+import { initializeApp, FirebaseApp } from "firebase/app";
+import { getAnalytics, Analytics, isSupported } from "firebase/analytics";
+import { getFirestore, Firestore } from "firebase/firestore";
+import firebase from "firebase/compat/app";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -13,17 +13,12 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-// Firebaseアプリの初期化
-let app: FirebaseApp;
-if (typeof window !== 'undefined' && !firebase.apps.length) {
-  app = initializeApp(firebaseConfig);
-} else {
-  app = firebase.apps[0];
-}
+// Firebaseの初期化
+const app: FirebaseApp = initializeApp(firebaseConfig);
 
 // Analyticsの初期化（クライアントサイドのみ）
 let analytics: Analytics | undefined;
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
   isSupported().then((supported) => {
     if (supported) {
       analytics = getAnalytics(app);
@@ -32,7 +27,7 @@ if (typeof window !== 'undefined') {
 }
 
 // Firestore
-// let firestore:Firestos
-// const db = getFirestore(app);
+let firestore: Firestore;
+const db = getFirestore(app);
 
-export { app, analytics};
+export { app, analytics, db };

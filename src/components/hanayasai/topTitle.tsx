@@ -13,7 +13,7 @@ export default function TopTitle({
           height={200 / 2}
           alt={""}
         />
-        <div className="text-center align-middle">
+        <div className="flex flex-col items-center justify-center">
           {subTitle && (
             <>
               <p className="underline whitespace-nowrap text-[#444444]">
@@ -24,11 +24,7 @@ export default function TopTitle({
               </p>
             </>
           )}
-          <p
-            className={`font-bold text-3xl sm:text-4xl text-[#444444] ${
-              subTitle ? "my-0" : "mt-10"
-            }`}
-          >
+          <p className="font-bold text-3xl no-underline text-[#444444]">
             花野菜農園
           </p>
         </div>
@@ -42,7 +38,7 @@ export default function TopTitle({
       </div>
 
       <Image
-        src="/images/top.jpg"
+        src="/images/TOP.jpg"
         width={960 / 2}
         height={545 / 2}
         alt={"top"}

@@ -1,16 +1,17 @@
 import Image from "next/image";
+import LogoImage from "./logoImage";
 
 export default function TopTitle({
   subTitle = true,
 }: Readonly<{ subTitle?: boolean }>) {
   return (
     <div className="w-full flex flex-col gap-4 mb-8 items-center">
-      <div className="flex justify-center h-26">
+      <div className="flex justify-center h-26 items-center">
         <Image
           src="/images/0034.png"
-          className="hidden mr-4 sm:block"
-          width={172 / 2}
-          height={200 / 2}
+          className="hidden mr-4 sm:block w-[86px] h-[100px]"
+          width={86}
+          height={100}
           alt={""}
         />
         <div className="text-center align-middle">
@@ -24,29 +25,21 @@ export default function TopTitle({
               </p>
             </>
           )}
-          <Image
-            src="/images/fruitshatakeTitleLogo.png"
-            className={
-              "object-contain h-12 sm:h-16 " + (subTitle ? "my-0" : "my-4")
-            }
-            width={1248 / 3}
-            height={171 / 3}
-            alt={"title"}
-          />
+          <LogoImage />
         </div>
         <Image
           src="/images/0106.png"
-          className="hidden ml-4 sm:block"
-          width={197 / 2}
-          height={200 / 2}
+          className="hidden ml-4 sm:block w-[98px] h-[100px]"
+          width={98}
+          height={100}
           alt={""}
         />
       </div>
 
       <Image
-        src="/images/topF.jpg"
-        width={960 / 2}
-        height={545 / 2}
+        src="/images/TOPF.jpg"
+        width={480}
+        height={272}
         alt={"top"}
         className="rounded-xl"
       />
