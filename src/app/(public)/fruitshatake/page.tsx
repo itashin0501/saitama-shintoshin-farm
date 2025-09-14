@@ -4,7 +4,7 @@ import TopicLabel from "@/components/topicLabel";
 import Image from "next/image";
 import { introdution, access, experience } from "@/contents/fruhata-messages";
 import MessageBoardY from "@/components/messageBoardY";
-import Link from "next/link";
+import Schedule from "@/components/Schedule";
 
 export default function Home() {
   return (
@@ -15,12 +15,11 @@ export default function Home() {
           <pre className="text-lg whitespace-pre-wrap">{introdution}</pre>
         </div>
       </div>
-      <Link href="/hanayasai">
-        <p className={`font-bold text-3xl sm:text-4xl text-[#444444] `}>
-          花野菜農園
-        </p>
-        はこちら
-      </Link>
+
+      <TopicLabel title="スケジュール" />
+      <div className="flex justify-center mb-8">
+        <Schedule className="w-[340px] sm:w-[400px] md:w-[600px] lg:w-[800px]" />
+      </div>
 
       <TopicLabel title="体験" />
       <div className="flex justify-center mb-8">

@@ -11,6 +11,23 @@ export default function Header() {
           TOPへ
         </Link>
       )}
+
+      {pathname === "/fruitshatake" && (
+        <Link
+          href="/hanayasai"
+          className="text-white font-bold text-lg ml-auto"
+        >
+          「花野菜農園」へ
+        </Link>
+      )}
+      {pathname === "/hanayasai" && (
+        <Link
+          href="/fruitshatake"
+          className="text-white font-bold text-lg ml-auto"
+        >
+          「フルーツとやさい畑」へ
+        </Link>
+      )}
       {false && <MenuTitle title="利用者ログイン" />}
     </div>
   );
