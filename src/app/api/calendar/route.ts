@@ -11,8 +11,8 @@ interface CalendarEvent {
 
 function parseICalDate(dateStr: string): Date {
   // Remove TZID parameter if present
-  const cleanDateStr = dateStr.split(':').pop() || dateStr;
-  
+  const cleanDateStr = dateStr.split(":").pop() || dateStr;
+
   if (cleanDateStr.includes("T")) {
     // Format: YYYYMMDDTHHMMSS or YYYYMMDDTHHMMSSZ
     const isUTC = cleanDateStr.endsWith("Z");
@@ -23,7 +23,7 @@ function parseICalDate(dateStr: string): Date {
     const hour = parseInt(dateOnly.substring(9, 11) || "0");
     const minute = parseInt(dateOnly.substring(11, 13) || "0");
     const second = parseInt(dateOnly.substring(13, 15) || "0");
-    
+
     if (isUTC) {
       return new Date(Date.UTC(year, month, day, hour, minute, second));
     } else {
@@ -47,7 +47,7 @@ function parseICalData(icalData: string): CalendarEvent[] {
   let multiLineKey = "";
 
   for (let i = 0; i < lines.length; i++) {
-    let line = lines[i];
+    const line = lines[i];
 
     if (line.startsWith(" ") && multiLineKey) {
       multiLineValue += line.substring(1);
