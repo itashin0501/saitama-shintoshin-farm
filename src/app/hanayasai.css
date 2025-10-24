@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+.hanayasai-layout {
+  min-height: 100vh;
   color: var(--foreground);
   background: var(--background);
   font-family: 'Tsukimi Rounded-Bold', Helvetica, Arial, sans-serif;

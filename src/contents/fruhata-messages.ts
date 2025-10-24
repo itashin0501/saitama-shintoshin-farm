@@ -3,8 +3,8 @@ export const introdution = `さいたま新都心のビル群を望む、広大�
 「えらぶ」「そだてる」「まなぶ」を思いっきり体験してください！`;
 
 export const access = {
-  address: 'さいたま市浦和区三崎49-1&2',
-  byCar: '【車】 さいたま見沼ICから3分',
+  address: "さいたま市浦和区三崎34",
+  byCar: "【車】 さいたま見沼ICから3分",
   byTrain: `【電車＆バス】
 JR「北浦和駅」東口クイーンズ伊勢丹前東武バス5番乗車
 JR「さいたま新都心駅」東口東武バス1番乗車
@@ -25,4 +25,6 @@ export const experience = {
 ご用意しております。`,
   privatePark: `リモートワークの合間に農作業、
 お友達と収穫物でピザパーティーも開催できます。`,
+  spaceMarket: `ご契約者様以外のご利用も可能です。
+SpaceMarketからご予約ください。`,
 };

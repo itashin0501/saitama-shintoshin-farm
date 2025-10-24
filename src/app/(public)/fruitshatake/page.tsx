@@ -1,3 +1,5 @@
+"use client";
+
 import MessageBoard from "@/components/messageBoard";
 import Toptitle from "@/components/fruitshatake/topTitle";
 import TopicLabel from "@/components/topicLabel";
@@ -71,6 +73,18 @@ export default function Home() {
               width={1000 / 3.5}
               height={400 / 3.5}
               alt={"taiken-5"}
+              className="rounded-lg"
+            />
+          </MessageBoardY>
+          <MessageBoardY
+            title="プライベートパーク利用"
+            text={experience.spaceMarket}
+          >
+            <Image
+              src="/images/fruitshatake-spmk-qrcode.png"
+              width={500 / 3.5}
+              height={500 / 3.5}
+              alt={"qr-spaceMarket"}
               className="rounded-lg"
             />
           </MessageBoardY>

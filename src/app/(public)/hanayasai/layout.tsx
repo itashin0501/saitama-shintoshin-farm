@@ -16,12 +16,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
+    <div className='hanayasai-layout'>
       <Header />
       <div className='flex flex-col min-h-screen mx-4 md:mx-8 md:mb-24 items-center sm:items-start'>
         {children}
       </div>
       <Footer text='花野菜農園' />
-    </>
+    </div>
   );
 }

@@ -1,6 +1,7 @@
 import { initializeApp, FirebaseApp } from "firebase/app";
 import { getAnalytics, Analytics, isSupported } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
+import { getMessaging, Messaging, isSupported as isMessagingSupported } from "firebase/messaging";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -28,4 +29,14 @@ if (typeof window !== "undefined") {
 // Firestore
 const db = getFirestore(app);
 
-export { app, analytics, db };
+// FCM Messaging（クライアントサイドのみ）
+let messaging: Messaging | undefined;
+if (typeof window !== "undefined") {
+  isMessagingSupported().then((supported) => {
+    if (supported) {
+      messaging = getMessaging(app);
+    }
+  });
+}
+
+export { app, analytics, db, messaging };
