@@ -7,6 +7,8 @@ import Image from "next/image";
 import { introdution, access, experience } from "@/contents/fruhata-messages";
 import MessageBoardY from "@/components/messageBoardY";
 import Schedule from "@/components/Schedule";
+import InstagramSimple from "@/components/InstagramSimple";
+import BeholdWidget from "@/components/BeholdWidget";
 
 export default function Home() {
   return (
@@ -16,6 +18,12 @@ export default function Home() {
         <div className="bg-green-100 rounded-xl p-4 mt-4 w-[340px] sm:w-[400px] md:w-[600px] lg:w-[800px]">
           <pre className="text-lg whitespace-pre-wrap">{introdution}</pre>
         </div>
+      </div>
+
+      <TopicLabel title="ギャラリー" />
+      <div className="flex flex-col items-center justify-center mb-8 px-4 gap-4">
+        <BeholdWidget feedId="jEHkrx3k0rudxQUAaaOy" className="w-full max-w-[1200px]" />
+        <InstagramSimple username="fruits_hatake" className="w-full" />
       </div>
 
       <TopicLabel title="スケジュール" />
@@ -78,15 +86,16 @@ export default function Home() {
           </MessageBoardY>
           <MessageBoardY
             title="プライベートパーク利用"
-            text={experience.spaceMarket}
+            textContent={experience.spaceMarket}
           >
-            <Image
-              src="/images/fruitshatake-spmk-qrcode.png"
-              width={500 / 3.5}
-              height={500 / 3.5}
-              alt={"qr-spaceMarket"}
-              className="rounded-lg"
-            />
+            <div className="relative w-[90px] xs:w-[140px] aspect-square">
+              <Image
+                src="/images/fruitshatake-spmk-qrcode.png"
+                fill
+                alt={"qr-spaceMarket"}
+                className="rounded-lg object-contain"
+              />
+            </div>
           </MessageBoardY>
         </div>
       </div>

@@ -25,6 +25,19 @@ export const experience = {
 ご用意しております。`,
   privatePark: `リモートワークの合間に農作業、
 お友達と収穫物でピザパーティーも開催できます。`,
-  spaceMarket: `ご契約者様以外のご利用も可能です。
-SpaceMarketからご予約ください。`,
+  spaceMarket: (
+    <>
+      ご契約者様以外のご利用も可能です。
+      <br />
+      <a
+        href="https://www.spacemarket.com/spaces/fruitshatake/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-blue-600 underline hover:text-blue-800"
+      >
+        SpaceMarket
+      </a>
+      からご予約ください。
+    </>
+  ),
 };
