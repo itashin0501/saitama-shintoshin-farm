@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import Script from "next/script";
 
 type Props = {
@@ -11,9 +10,12 @@ type Props = {
 export default function BeholdWidget({ feedId, className = "" }: Props) {
   return (
     <>
-      <div className={className}>
-        <behold-widget feed-id={feedId}></behold-widget>
-      </div>
+      <div
+        className={className}
+        dangerouslySetInnerHTML={{
+          __html: `<behold-widget feed-id="${feedId}"></behold-widget>`
+        }}
+      />
       <Script
         src="https://w.behold.so/widget.js"
         strategy="lazyOnload"
