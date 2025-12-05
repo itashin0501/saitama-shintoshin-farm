@@ -1,7 +1,6 @@
 "use client";
 
 import MessageBoard from "@/components/messageBoard";
-import Toptitle from "@/components/fruitshatake/topTitle";
 import TopicLabel from "@/components/topicLabel";
 import Image from "next/image";
 import { introdution, access, experience } from "@/contents/fruhata-messages";
@@ -9,21 +8,20 @@ import MessageBoardY from "@/components/messageBoardY";
 import Schedule from "@/components/Schedule";
 import InstagramSimple from "@/components/InstagramSimple";
 import BeholdWidget from "@/components/BeholdWidget";
+import ContactInfo from "@/components/fruitshatake/ContactInfo";
 
 export default function Home() {
   return (
     <div className="w-full">
-      <div className=" flex flex-col items-center mb-8">
-        <Toptitle />
+      <div className="flex flex-col items-center justify-center mb-8 px-4 gap-4">
+        <BeholdWidget
+          feedId="jEHkrx3k0rudxQUAaaOy"
+          className="w-full max-w-[1200px]"
+        />
+        <InstagramSimple username="fruits_hatake" className="w-full" />
         <div className="bg-green-100 rounded-xl p-4 mt-4 w-[340px] sm:w-[400px] md:w-[600px] lg:w-[800px]">
           <pre className="text-lg whitespace-pre-wrap">{introdution}</pre>
         </div>
-      </div>
-
-      <TopicLabel title="ギャラリー" />
-      <div className="flex flex-col items-center justify-center mb-8 px-4 gap-4">
-        <BeholdWidget feedId="jEHkrx3k0rudxQUAaaOy" className="w-full max-w-[1200px]" />
-        <InstagramSimple username="fruits_hatake" className="w-full" />
       </div>
 
       <TopicLabel title="スケジュール" />
@@ -117,17 +115,7 @@ export default function Home() {
         </div>
       </div>
       <TopicLabel title="お気軽にお問い合わせください" />
-      <div className="mt-4 grid gap-8 lg:max-w-[900px] xl:max-w-[1300px] grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-        <div className="text-xl leading-10">
-          <p>フルーツとやさい畑 担当：イタモト</p>
-          <p>０９０−３３１１−８８２４</p>
-          <p>受付 : 10:00〜18:00（土日祝も受付中）</p>
-          <p>
-            Email :{" "}
-            <a href="mailto:fruits.hatake@gmail.com">fruits.hatake@gmail.com</a>
-          </p>
-        </div>
-      </div>
+      <ContactInfo />
     </div>
   );
 }

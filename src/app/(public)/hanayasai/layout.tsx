@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import '@/app/hanayasai.css';
 import Favicon from '../../../../public/images/faviconH.ico';
-import Header from '@/components/header';
-import Footer from '@/components/footer';
+import Header from '@/components/hanayasai/Header';
+import Footer from '@/components/hanayasai/Footer';
 
 export const metadata: Metadata = {
   title: '花野菜農園',
@@ -21,7 +21,7 @@ export default function RootLayout({
       <div className='flex flex-col min-h-screen mx-4 md:mx-8 md:mb-24 items-center sm:items-start'>
         {children}
       </div>
-      <Footer text='花野菜農園' />
+      <Footer />
     </div>
   );
 }

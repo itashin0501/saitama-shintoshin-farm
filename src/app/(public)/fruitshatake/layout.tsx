@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "@/app/fruitshatake.css";
 import Favicon from "../../../../public/images/faviconF.ico";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
+import Header from "@/components/fruitshatake/Header";
+import Footer from "@/components/fruitshatake/Footer";
 
 export const metadata: Metadata = {
   title: "フルーツとやさい畑",
@@ -21,7 +21,7 @@ export default function RootLayout({
       <div className="flex flex-col min-h-screen mx-4 md:mx-8 md:mb-24 items-center sm:items-start">
         {children}
       </div>
-      <Footer text="フルーツとやさい畑" />
+      <Footer />
     </div>
   );
 }
