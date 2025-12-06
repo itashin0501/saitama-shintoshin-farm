@@ -8,6 +8,16 @@ const nextConfig: NextConfig = {
         ? process.env.NEXT_PUBLIC_APP_URL || "https://urawa.farm"
         : "https://localhost:3000",
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "firebasestorage.googleapis.com",
+        port: "",
+        pathname: "/v0/b/**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

@@ -19,7 +19,7 @@ export default function Slideshow({ images }: { images: string[] }) {
         <div
           key={src}
           className={
-            "transition-opacity duration-700 flex-shrink-0 h-[220px] sm:h-[360px]"
+            "transition-opacity duration-700 flex-shrink-0 h-[220px] sm:h-[360px] relative"
           }
           style={{
             opacity: i === index ? 1 : 0.4,
@@ -29,15 +29,17 @@ export default function Slideshow({ images }: { images: string[] }) {
             display: i === index ? "flex" : "none", // 中央の画像だけ表示
             alignItems: "center",
             justifyContent: "center",
+            width: "100%",
+            maxWidth: "800px",
           }}
         >
           <Image
             src={src}
             alt={`event image ${i + 1}`}
             className="rounded-lg object-cover w-full h-full"
-            style={{ minHeight: 0, minWidth: 0 }}
-            width={0}
-            height={0}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 800px"
+            quality={90}
           />
         </div>
       ))}

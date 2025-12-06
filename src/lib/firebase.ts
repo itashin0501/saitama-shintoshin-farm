@@ -1,6 +1,7 @@
 import { initializeApp, FirebaseApp } from "firebase/app";
 import { getAnalytics, Analytics, isSupported } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 import { getMessaging, Messaging, isSupported as isMessagingSupported } from "firebase/messaging";
 
 const firebaseConfig = {
@@ -29,6 +30,9 @@ if (typeof window !== "undefined") {
 // Firestore
 const db = getFirestore(app);
 
+// Storage
+const storage = getStorage(app);
+
 // FCM Messaging（クライアントサイドのみ）
 let messaging: Messaging | undefined;
 if (typeof window !== "undefined") {
@@ -39,4 +43,4 @@ if (typeof window !== "undefined") {
   });
 }
 
-export { app, analytics, db, messaging };
+export { app, analytics, db, storage, messaging };
