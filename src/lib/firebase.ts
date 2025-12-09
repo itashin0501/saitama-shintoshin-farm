@@ -14,6 +14,15 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || "G-3KXRLZHDS3",
 };
 
+// デバッグ：環境変数が読み込まれているか確認
+if (typeof window !== "undefined") {
+  console.log("Firebase環境変数の読み込み状況:", {
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY ? "環境変数から読み込み" : "フォールバック値を使用",
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID ? "環境変数から読み込み" : "フォールバック値を使用",
+    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID ? "環境変数から読み込み" : "フォールバック値を使用",
+  });
+}
+
 // Firebaseの初期化
 const app: FirebaseApp = initializeApp(firebaseConfig);
 
