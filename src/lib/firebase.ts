@@ -14,6 +14,19 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
+// デバッグ用：環境変数が正しく読み込まれているか確認
+if (typeof window !== "undefined" && !firebaseConfig.projectId) {
+  console.error("Firebase Config Error - Missing values:", {
+    hasApiKey: !!process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+    hasAuthDomain: !!process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    hasProjectId: !!process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    hasStorageBucket: !!process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    hasMessagingSenderId: !!process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+    hasAppId: !!process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+    config: firebaseConfig,
+  });
+}
+
 // Firebaseの初期化
 const app: FirebaseApp = initializeApp(firebaseConfig);
 
