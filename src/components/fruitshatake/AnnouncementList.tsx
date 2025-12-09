@@ -2,8 +2,10 @@
 import { useEffect, useState } from "react";
 import { collection, query, orderBy, limit, getDocs, Timestamp } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import Link from "next/link";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 export type Announcement = {
   id: string;
@@ -78,9 +80,10 @@ export default function AnnouncementList() {
 
       <div className="space-y-4">
         {announcements.map((announcement) => (
-          <div
+          <Link
             key={announcement.id}
-            className="border-l-4 border-green-500 pl-4 py-3 hover:bg-green-50 transition-colors"
+            href={`/fruitshatake/announcements/${announcement.id}`}
+            className="block border-l-4 border-green-500 pl-4 py-3 hover:bg-green-50 transition-colors cursor-pointer group"
           >
             <div className="flex items-start gap-2 mb-2">
               <AccessTimeIcon className="text-gray-400 text-sm mt-1" fontSize="small" />
@@ -92,13 +95,21 @@ export default function AnnouncementList() {
                 })}
               </span>
             </div>
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">
-              {announcement.title}
-            </h3>
-            <p className="text-gray-700 whitespace-pre-wrap">
-              {announcement.content}
-            </p>
-          </div>
+            <div className="flex items-start justify-between gap-2">
+              <div className="flex-1">
+                <h3 className="text-lg font-semibold text-gray-800 mb-2 group-hover:text-green-600 transition-colors">
+                  {announcement.title}
+                </h3>
+                <p className="text-gray-700 line-clamp-2">
+                  {announcement.content}
+                </p>
+              </div>
+              <ChevronRightIcon className="text-gray-400 group-hover:text-green-600 transition-colors flex-shrink-0" />
+            </div>
+            <div className="mt-2 text-sm text-green-600 font-semibold group-hover:underline">
+              続きを読む
+            </div>
+          </Link>
         ))}
       </div>
     </div>
