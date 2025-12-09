@@ -63,6 +63,17 @@ runConfig:
         - BUILD
         - RUNTIME
 
+    # メール送信設定（サーバーサイド専用）
+    - variable: EMAIL_USER
+      value: fruits.hatake@gmail.com
+      availability:
+        - RUNTIME
+
+    - variable: EMAIL_PASSWORD
+      value: lusvqakydtchcxsi
+      availability:
+        - RUNTIME
+
     # シークレット参照
     - variable: FIREBASE_SERVICE_ACCOUNT_KEY
       secret: FIREBASE_SERVICE_ACCOUNT_KEY
