@@ -15,18 +15,33 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // 環境変数チェック
+    const emailUser = process.env.EMAIL_USER;
+    const emailPassword = process.env.EMAIL_PASSWORD;
+
+    if (!emailUser || !emailPassword) {
+      console.error("メール送信環境変数が設定されていません:", {
+        hasEmailUser: !!emailUser,
+        hasEmailPassword: !!emailPassword,
+      });
+      return NextResponse.json(
+        { error: "メールサーバーの設定エラー" },
+        { status: 500 }
+      );
+    }
+
     // メール送信設定
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD,
+        user: emailUser,
+        pass: emailPassword,
       },
     });
 
     // メール本文
     const mailOptions = {
-      from: process.env.EMAIL_USER,
+      from: emailUser,
       to: "fruits.hatake@gmail.com",
       subject: `【お問い合わせ】${subject}`,
       text: `
