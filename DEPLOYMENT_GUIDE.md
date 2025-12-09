@@ -102,3 +102,27 @@ firebase apphosting:secrets:describe FIREBASE_SERVICE_ACCOUNT_KEY
 - `.env.local` はローカル開発用のみ使用
 - 本番環境では必ずFirebase CLIで秘匿情報を管理
 - 定期的にサービスアカウントキーを更新
+
+### 9. 既知の問題と回避策
+
+#### Firebase App Hostingの環境変数読み込み問題
+
+**問題**: Firebase App HostingでGitHubからの自動デプロイを使用した場合、`apphosting.yaml`で設定した`NEXT_PUBLIC_*`環境変数がランタイムで正しく読み込まれないバグがあります。
+
+**影響**: `process.env.NEXT_PUBLIC_FIREBASE_*`が全て`undefined`になり、Firebaseの初期化に失敗します。
+
+**現在の回避策**: [src/lib/firebase.ts](src/lib/firebase.ts)にフォールバック値をハードコードしています。
+
+```typescript
+const firebaseConfig = {
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "AIzaSyC...", // フォールバック値
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "fruits-hatake",
+  // ...
+};
+```
+
+**参考情報**:
+- [GitHub Issue #8307](https://github.com/firebase/firebase-tools/issues/8307)
+- [Firebase Studio Community Discussion](https://community.firebasestudio.dev/t/16270)
+
+**将来の対応**: Firebaseチームがこのバグを修正したら、フォールバック値を削除し、環境変数のみを使用するように変更してください。
