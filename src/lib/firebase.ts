@@ -4,6 +4,20 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { getMessaging, Messaging, isSupported as isMessagingSupported } from "firebase/messaging";
 
+/**
+ * Firebase設定
+ *
+ * 注意: フォールバック値を使用しています
+ * 理由: Firebase App Hostingの既知のバグにより、apphosting.yamlで設定した
+ * NEXT_PUBLIC_*環境変数がGitHubからの自動デプロイ時に正しく読み込まれません。
+ *
+ * 参考:
+ * - https://github.com/firebase/firebase-tools/issues/8307
+ * - https://community.firebasestudio.dev/t/16270
+ *
+ * TODO: Firebase App Hostingのバグが修正されたら、フォールバック値を削除し、
+ * 環境変数のみを使用するように変更してください。
+ */
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "AIzaSyCUuKOgIEsrqmGtB8uZxH39KNrw5Fsa67E",
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "fruits-hatake.firebaseapp.com",
@@ -13,15 +27,6 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "1:535151453831:web:614b38b6aac288bf9e7a22",
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || "G-3KXRLZHDS3",
 };
-
-// デバッグ：環境変数が読み込まれているか確認
-if (typeof window !== "undefined") {
-  console.log("Firebase環境変数の読み込み状況:", {
-    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY ? "環境変数から読み込み" : "フォールバック値を使用",
-    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID ? "環境変数から読み込み" : "フォールバック値を使用",
-    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID ? "環境変数から読み込み" : "フォールバック値を使用",
-  });
-}
 
 // Firebaseの初期化
 const app: FirebaseApp = initializeApp(firebaseConfig);
