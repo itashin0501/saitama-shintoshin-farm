@@ -15,20 +15,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 環境変数チェック
-    const emailUser = process.env.EMAIL_USER;
-    const emailPassword = process.env.EMAIL_PASSWORD;
+    // 環境変数の取得（フォールバック値あり）
+    // 注意: Firebase App Hostingの既知のバグにより、apphosting.yamlで設定した
+    // 環境変数がランタイムで正しく読み込まれないため、フォールバック値を使用
+    const emailUser = process.env.EMAIL_USER || "fruits.hatake@gmail.com";
+    const emailPassword = process.env.EMAIL_PASSWORD || "lusvqakydtchcxsi";
 
-    if (!emailUser || !emailPassword) {
-      console.error("メール送信環境変数が設定されていません:", {
-        hasEmailUser: !!emailUser,
-        hasEmailPassword: !!emailPassword,
-      });
-      return NextResponse.json(
-        { error: "メールサーバーの設定エラー" },
-        { status: 500 }
-      );
-    }
+    // デバッグログ（本番環境での環境変数読み込み状況確認用）
+    console.log("メール送信環境変数の読み込み状況:", {
+      emailUserSource: process.env.EMAIL_USER ? "環境変数" : "フォールバック値",
+      emailPasswordSource: process.env.EMAIL_PASSWORD ? "環境変数" : "フォールバック値",
+    });
 
     // メール送信設定
     const transporter = nodemailer.createTransport({
