@@ -9,11 +9,17 @@ import Schedule from "@/components/Schedule";
 import InstagramSimple from "@/components/InstagramSimple";
 import BeholdWidget from "@/components/BeholdWidget";
 import ContactInfo from "@/components/fruitshatake/ContactInfo";
+import AnnouncementList from "@/components/fruitshatake/AnnouncementList";
 
 export default function Home() {
   return (
     <div className="w-full">
+      <TopicLabel title="お知らせ" />
+
       <div className="flex flex-col items-center justify-center mb-8 px-4 gap-4">
+        <div className="w-full max-w-[800px]">
+          <AnnouncementList />
+        </div>
         <BeholdWidget
           feedId="jEHkrx3k0rudxQUAaaOy"
           className="w-full max-w-[1200px]"
