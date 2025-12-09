@@ -17,6 +17,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EventIcon from "@mui/icons-material/Event";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 type EventSummary = {
   id: string;
@@ -81,6 +82,15 @@ export default function EventsAdminPage() {
   return (
     <div className="min-h-screen bg-gray-50 p-4">
       <div className="max-w-6xl mx-auto">
+        {/* 戻るリンク */}
+        <Link
+          href="/admin"
+          className="inline-flex items-center text-gray-600 hover:text-gray-800 mb-4 transition-colors"
+        >
+          <ArrowBackIcon className="mr-1" fontSize="small" />
+          管理画面TOPへ戻る
+        </Link>
+
         {/* ヘッダー */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
           <div className="flex items-center justify-between">

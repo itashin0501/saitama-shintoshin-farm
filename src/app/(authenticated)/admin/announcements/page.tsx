@@ -12,6 +12,7 @@ import {
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import Link from "next/link";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 type Announcement = {
   id: string;
@@ -79,6 +80,15 @@ export default function AnnouncementsAdminPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      {/* 戻るリンク */}
+      <Link
+        href="/admin"
+        className="inline-flex items-center text-gray-600 hover:text-gray-800 mb-4 transition-colors"
+      >
+        <ArrowBackIcon className="mr-1" fontSize="small" />
+        管理画面TOPへ戻る
+      </Link>
+
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-gray-800">お知らせ管理</h1>
         <Link
