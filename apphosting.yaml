@@ -7,20 +7,64 @@ runConfig:
   # cpu: 1
   # memoryMiB: 512
 
-  # Environment variables and secrets.
-  # env:
-  # Configure environment variables.
-  # See https://firebase.google.com/docs/app-hosting/configure#user-defined-environment
-  # - variable: MESSAGE
-  #   value: Hello world!
-  #   availability:
-  #     - BUILD
-  #     - RUNTIME
+  env:
+    # Firebase公開設定
+    - variable: NEXT_PUBLIC_FIREBASE_API_KEY
+      value: AIzaSyCUuKOgIEsrqmGtB8uZxH39KNrw5Fsa67E
+      availability:
+        - BUILD
+        - RUNTIME
 
-  # Grant access to secrets in Cloud Secret Manager.
-  # See https://firebase.google.com/docs/app-hosting/configure#secret-parameters
-  # - variable: MY_SECRET
-  #   secret: mySecretRef
-env:
-  - variable: PRODUCTION
-    secret: FIREBASE_SERVICE_ACCOUNT_KEY
+    - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+      value: fruits-hatake.firebaseapp.com
+      availability:
+        - BUILD
+        - RUNTIME
+
+    - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+      value: fruits-hatake
+      availability:
+        - BUILD
+        - RUNTIME
+
+    - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+      value: fruits-hatake.firebasestorage.app
+      availability:
+        - BUILD
+        - RUNTIME
+
+    - variable: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+      value: "535151453831"
+      availability:
+        - BUILD
+        - RUNTIME
+
+    - variable: NEXT_PUBLIC_FIREBASE_APP_ID
+      value: 1:535151453831:web:614b38b6aac288bf9e7a22
+      availability:
+        - BUILD
+        - RUNTIME
+
+    - variable: NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
+      value: G-3KXRLZHDS3
+      availability:
+        - BUILD
+        - RUNTIME
+
+    - variable: NEXT_PUBLIC_FIREBASE_VAPID_KEY
+      value: BOI185jhOrUSM8n6kQ1MOSxnAoWInF8V-LK-aTOYXTznDemzAjatXTKw6odylsG67Loth3MztjAJTARvNJkg9lw
+      availability:
+        - BUILD
+        - RUNTIME
+
+    - variable: NEXT_PUBLIC_APP_URL
+      value: https://urawa.farm
+      availability:
+        - BUILD
+        - RUNTIME
+
+    # シークレット参照
+    - variable: FIREBASE_SERVICE_ACCOUNT_KEY
+      secret: FIREBASE_SERVICE_ACCOUNT_KEY
+      availability:
+        - RUNTIME
