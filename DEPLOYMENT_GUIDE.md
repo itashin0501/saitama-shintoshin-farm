@@ -107,18 +107,27 @@ firebase apphosting:secrets:describe FIREBASE_SERVICE_ACCOUNT_KEY
 
 #### Firebase App Hostingの環境変数読み込み問題
 
-**問題**: Firebase App HostingでGitHubからの自動デプロイを使用した場合、`apphosting.yaml`で設定した`NEXT_PUBLIC_*`環境変数がランタイムで正しく読み込まれないバグがあります。
+**問題**: Firebase App HostingでGitHubからの自動デプロイを使用した場合、`apphosting.yaml`で設定した環境変数がランタイムで正しく読み込まれないバグがあります。
 
-**影響**: `process.env.NEXT_PUBLIC_FIREBASE_*`が全て`undefined`になり、Firebaseの初期化に失敗します。
+**影響**:
+- **クライアントサイド**: `process.env.NEXT_PUBLIC_FIREBASE_*`が全て`undefined`になり、Firebaseの初期化に失敗
+- **サーバーサイド**: `process.env.EMAIL_USER`と`process.env.EMAIL_PASSWORD`が`undefined`になり、メール送信に失敗
 
-**現在の回避策**: [src/lib/firebase.ts](src/lib/firebase.ts)にフォールバック値をハードコードしています。
+**現在の回避策**:
 
+1. **Firebase設定** - [src/lib/firebase.ts](src/lib/firebase.ts)にフォールバック値を設定:
 ```typescript
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "AIzaSyC...", // フォールバック値
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "AIzaSyC...",
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "fruits-hatake",
   // ...
 };
+```
+
+2. **メール送信設定** - [src/app/api/contact/route.ts](src/app/api/contact/route.ts)にフォールバック値を設定:
+```typescript
+const emailUser = process.env.EMAIL_USER || "fruits.hatake@gmail.com";
+const emailPassword = process.env.EMAIL_PASSWORD || "lusvqakydtchcxsi";
 ```
 
 **参考情報**:
