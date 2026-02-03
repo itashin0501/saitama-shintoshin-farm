@@ -15,15 +15,6 @@ export default function Home() {
         </div>
       </div>
 
-      <TopicLabel title="おしらせ" />
-      <div className="flex flex-col text-lg p-6 bg-white rounded-xl justify-center mx-auto mb-8 w-[400px] lg:w-[800px]">
-        <p className="underline">2025/04/13(日)</p>
-        <p className="font-bold">農園説明会を開催します。</p>
-        <p className="ml-2">
-          午前10:30〜11;30、午後13:30〜15:30 現地でご案内いたします。
-        </p>
-      </div>
-
       <TopicLabel title="体験" />
       <div className="flex justify-center mb-8">
         <div className="mt-4 grid gap-8 lg:max-w-[900px] xl:max-w-[1300px] grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">

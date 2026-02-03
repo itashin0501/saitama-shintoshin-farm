@@ -3,7 +3,8 @@ import LogoImage from "./logoImage";
 
 export default function TopTitle({
   subTitle = true,
-}: Readonly<{ subTitle?: boolean }>) {
+  logoAsLink = true,
+}: Readonly<{ subTitle?: boolean; logoAsLink?: boolean }>) {
   return (
     <div className="w-full flex flex-col gap-4 mb-8 items-center">
       <div className="flex justify-center h-26 items-center">
@@ -25,7 +26,7 @@ export default function TopTitle({
               </p>
             </>
           )}
-          <LogoImage />
+          <LogoImage asLink={logoAsLink} />
         </div>
         <Image
           src="/images/0106.png"

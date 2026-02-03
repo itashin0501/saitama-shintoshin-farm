@@ -32,7 +32,7 @@ export default function Home() {
           </div>
           <div>
             <Link href="/fruitshatake">
-              <Fruhata subTitle={false} />
+              <Fruhata subTitle={false} logoAsLink={false} />
             </Link>
           </div>
         </div>
