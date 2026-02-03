@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import {
   collection,
   query,
@@ -24,7 +23,6 @@ type Announcement = {
 };
 
 export default function AnnouncementsAdminPage() {
-  const router = useRouter();
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -36,7 +34,7 @@ export default function AnnouncementsAdminPage() {
     try {
       const q = query(
         collection(db, "announcements"),
-        orderBy("createdAt", "desc")
+        orderBy("createdAt", "desc"),
       );
       const querySnapshot = await getDocs(q);
       const announcementList = querySnapshot.docs.map((doc) => ({
@@ -54,7 +52,7 @@ export default function AnnouncementsAdminPage() {
 
   const handleDelete = async (
     announcementId: string,
-    announcementTitle: string
+    announcementTitle: string,
   ) => {
     if (!confirm(`「${announcementTitle}」を削除してもよろしいですか？`)) {
       return;

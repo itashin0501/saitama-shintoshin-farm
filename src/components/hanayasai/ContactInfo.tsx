@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export default function ContactInfo() {
   return (
     <div className="bg-white rounded-lg p-4">

@@ -78,9 +78,8 @@ export default function AnnouncementForm({
         await addDoc(collection(db, "announcements"), newAnnouncement);
         alert("お知らせを作成しました");
       } else {
-        const updateData: Partial<AnnouncementData> & {
-          publishedAt?: any;
-        } = {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const updateData: any = {
           title: formData.title,
           content: formData.content,
           isPublished: formData.isPublished,
