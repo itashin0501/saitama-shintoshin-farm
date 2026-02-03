@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Hanayasai from "@/components/hanayasai/topTitle";
 import Fruhata from "@/components/fruitshatake/topTitle";
 import Link from "next/link";
-import Header from "@/components/hanayasai/Header";
 import Footer from "@/components/hanayasai/Footer";
 
 export const metadata: Metadata = {
@@ -13,7 +12,6 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <div className="w-full text-center flex flex-col min-h-screen">
-      <Header />
       <div className="flex-grow">
         <div className="mb-8">
           <p className="underline text-lg sm:text-2xl whitespace-nowrap text-[#444444]">
