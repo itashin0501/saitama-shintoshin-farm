@@ -153,36 +153,38 @@ export default function EventDetail({
           参加料金
         </h3>
         <div className="grid md:grid-cols-2 gap-6">
-          {!event?.adultFee && !event?.childFee && (
-            <div className="bg-orange-50 rounded-lg p-6 text-center border-2 border-red-200">
-              <p className="text-2xl font-bold text-red-700">
-                {event?.adultFee ? `${event.adultFee}円` : "無料"}
-              </p>
+          {(event?.adultFee === 0 || event?.adultFee === undefined || event?.adultFee === null) &&
+           (event?.childFee === 0 || event?.childFee === undefined || event?.childFee === null) ? (
+            <div className="bg-orange-50 rounded-lg p-6 text-center border-2 border-red-200 md:col-span-2">
+              <p className="text-2xl font-bold text-red-700">無料</p>
             </div>
-          )}
-          {event?.childFee && (
-            <div className="bg-orange-50 rounded-lg p-6 text-center border-2 border-orange-200">
-              <div className="text-4xl mb-2 flex justify-center">
-                <FamilyRestroomIcon fontSize="large" />
-              </div>
-              <h4 className="text-2xl font-bold text-orange-600 mb-2">大人</h4>
-              <p className="text-3xl font-bold text-orange-700">
-                {event?.adultFee}円
-              </p>
-            </div>
-          )}
-          {event?.childFee && (
-            <div className="bg-green-50 rounded-lg p-6 text-center border-2 border-green-200">
-              <div className="text-4xl mb-2 flex justify-center">
-                <ChildCareIcon fontSize="large" />
-              </div>
-              <h4 className="text-2xl font-bold text-green-600 mb-2">
-                小学生以下
-              </h4>
-              <p className="text-3xl font-bold text-green-700">
-                {event?.childFee}円
-              </p>
-            </div>
+          ) : (
+            <>
+              {(event?.adultFee !== undefined && event?.adultFee !== null) && (
+                <div className="bg-orange-50 rounded-lg p-6 text-center border-2 border-orange-200">
+                  <div className="text-4xl mb-2 flex justify-center">
+                    <FamilyRestroomIcon fontSize="large" />
+                  </div>
+                  <h4 className="text-2xl font-bold text-orange-600 mb-2">大人</h4>
+                  <p className="text-3xl font-bold text-orange-700">
+                    {event.adultFee === 0 ? "無料" : `${event.adultFee}円`}
+                  </p>
+                </div>
+              )}
+              {(event?.childFee !== undefined && event?.childFee !== null) && (
+                <div className="bg-green-50 rounded-lg p-6 text-center border-2 border-green-200">
+                  <div className="text-4xl mb-2 flex justify-center">
+                    <ChildCareIcon fontSize="large" />
+                  </div>
+                  <h4 className="text-2xl font-bold text-green-600 mb-2">
+                    小学生以下
+                  </h4>
+                  <p className="text-3xl font-bold text-green-700">
+                    {event.childFee === 0 ? "無料" : `${event.childFee}円`}
+                  </p>
+                </div>
+              )}
+            </>
           )}
         </div>
         {event?.feeNotes && (

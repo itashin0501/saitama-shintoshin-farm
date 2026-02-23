@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <div className="fruitshatake-layout">
       <Header />
-      <div className="flex flex-col min-h-screen mx-4 md:mx-8 md:mb-24 items-center sm:items-start">
+      <div className="flex flex-col min-h-screen md:pb-24 items-center">
         {children}
       </div>
       <Footer />

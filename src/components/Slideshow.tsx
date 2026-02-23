@@ -8,7 +8,7 @@ export default function Slideshow({ images }: { images: string[] }) {
   useEffect(() => {
     const timer = setInterval(
       () => setIndex((prev) => (prev + 1) % images.length),
-      3000
+      3000,
     );
     return () => clearInterval(timer);
   }, [images.length]);
@@ -19,11 +19,11 @@ export default function Slideshow({ images }: { images: string[] }) {
         <div
           key={src}
           className={
-            "transition-opacity duration-700 flex-shrink-0 h-[220px] sm:h-[360px] relative"
+            "transition-opacity duration-[1500ms] ease-in-out flex-shrink-0 h-[220px] sm:h-[360px] relative"
           }
           style={{
-            opacity: i === index ? 1 : 0.4,
-            border: i === index ? "3px solid #38bdf8" : "none",
+            opacity: i === index ? 1 : 0,
+            border: i === index ? "1px solid #c8ecfcff" : "none",
             borderRadius: "12px",
             background: "#eee",
             display: i === index ? "flex" : "none", // 中央の画像だけ表示
