@@ -12,6 +12,8 @@ const nextConfig: NextConfig = {
         pathname: "/v0/b/**",
       },
     ],
+    // Slideshow.tsx で quality=90 を使用しているため、デフォルトの[75]に90を追加
+    qualities: [75, 90],
   },
 };
 

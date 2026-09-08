@@ -26,10 +26,6 @@ export default function AnnouncementsAdminPage() {
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchAnnouncements();
-  }, []);
-
   const fetchAnnouncements = async () => {
     try {
       const q = query(
@@ -49,6 +45,10 @@ export default function AnnouncementsAdminPage() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchAnnouncements();
+  }, []);
 
   const handleDelete = async (
     announcementId: string,
