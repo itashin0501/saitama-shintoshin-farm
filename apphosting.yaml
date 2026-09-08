@@ -69,12 +69,12 @@ runConfig:
       availability:
         - RUNTIME
 
+    # シークレット参照
     - variable: EMAIL_PASSWORD
-      value: lusvqakydtchcxsi
+      secret: EMAIL_PASSWORD
       availability:
         - RUNTIME
 
-    # シークレット参照
     - variable: FIREBASE_SERVICE_ACCOUNT_KEY
       secret: FIREBASE_SERVICE_ACCOUNT_KEY
       availability:
