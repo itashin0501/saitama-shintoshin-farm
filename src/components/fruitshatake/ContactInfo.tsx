@@ -4,9 +4,6 @@ export default function ContactInfo() {
   return (
     <div className="bg-white rounded-lg p-4">
       <p className="font-semibold text-lg">フルーツとやさい畑 担当：イタモト</p>
-      <p className="text-xl text-green-700 font-bold mt-2">
-        ０９０−３３１１−８８２４
-      </p>
       <p className="text-gray-600 mt-1">
         受付 : 10:00〜18:00（土日祝も受付中）
       </p>
