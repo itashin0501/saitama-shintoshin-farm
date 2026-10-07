@@ -3,11 +3,13 @@ import Link from "next/link";
 import EventIcon from "@mui/icons-material/Event";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import PhotoLibraryIcon from "@mui/icons-material/PhotoLibrary";
+import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
 
 export default function AdminDashboard() {
   const menuItems = [
     {
-      title: "イベント管理",
+      title: "イベント管理（フルーツとやさい畑）",
       description: "イベントの作成、編集、削除が行えます",
       icon: <EventIcon className="text-4xl" />,
       href: "/admin/events",
@@ -21,6 +23,22 @@ export default function AdminDashboard() {
       href: "/admin/announcements",
       color: "bg-green-500",
       hoverColor: "hover:bg-green-600",
+    },
+    {
+      title: "花野菜農園 イベント",
+      description: "花野菜農園のイベント告知・レポートの作成、編集、削除が行えます",
+      icon: <LocalFloristIcon className="text-4xl" />,
+      href: "/admin/hanayasai/events",
+      color: "bg-pink-500",
+      hoverColor: "hover:bg-pink-600",
+    },
+    {
+      title: "花野菜農園 利用の様子",
+      description: "TOPページに表示する写真とキャプションを管理します",
+      icon: <PhotoLibraryIcon className="text-4xl" />,
+      href: "/admin/hanayasai/activities",
+      color: "bg-yellow-500",
+      hoverColor: "hover:bg-yellow-600",
     },
   ];
 

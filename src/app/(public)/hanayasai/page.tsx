@@ -8,6 +8,8 @@ import Image from "next/image";
 import { introdution, access, experience } from "@/contents/messages";
 import MessageBoardY from "@/components/messageBoardY";
 import ContactInfo from "@/components/hanayasai/ContactInfo";
+import ActivityGallery from "@/components/hanayasai/ActivityGallery";
+import Link from "next/link";
 
 type TabType = "experience" | "pricing" | "faq" | "access";
 const linkStyle =
@@ -46,6 +48,12 @@ export default function Home() {
               {tab.label}
             </button>
           ))}
+          <Link
+            href="/hanayasai/events"
+            className="inline-block px-4 py-2 md:px-6 md:py-3 rounded-lg font-semibold text-sm md:text-base transition-all text-gray-700"
+          >
+            イベント
+          </Link>
         </div>
       </div>
 
@@ -107,6 +115,7 @@ export default function Home() {
               </MessageBoardY>
             </div>
           </div>
+          <ActivityGallery />
         </>
       )}
 
