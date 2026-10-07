@@ -7,6 +7,7 @@ import PhotoLibraryIcon from "@mui/icons-material/PhotoLibrary";
 import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
 
 export default function AdminDashboard() {
+  // hidden: true のメニューは管理画面TOPに表示しない（ページ自体は URL 直打ちで開ける）
   const menuItems = [
     {
       title: "イベント管理（フルーツとやさい畑）",
@@ -15,6 +16,7 @@ export default function AdminDashboard() {
       href: "/admin/events",
       color: "bg-blue-500",
       hoverColor: "hover:bg-blue-600",
+      hidden: true,
     },
     {
       title: "お知らせ管理",
@@ -23,6 +25,7 @@ export default function AdminDashboard() {
       href: "/admin/announcements",
       color: "bg-green-500",
       hoverColor: "hover:bg-green-600",
+      hidden: true,
     },
     {
       title: "花野菜農園 イベント",
@@ -57,7 +60,7 @@ export default function AdminDashboard() {
 
       {/* メニューカード */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {menuItems.map((item) => (
+        {menuItems.filter((item) => !item.hidden).map((item) => (
           <Link
             key={item.href}
             href={item.href}
