@@ -2,6 +2,7 @@ import { initializeApp, FirebaseApp } from "firebase/app";
 import { getAnalytics, Analytics, isSupported } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+import { getAuth } from "firebase/auth";
 import { getMessaging, Messaging, isSupported as isMessagingSupported } from "firebase/messaging";
 
 /**
@@ -47,6 +48,9 @@ const db = getFirestore(app);
 // Storage
 const storage = getStorage(app);
 
+// Auth（管理画面のログイン用）
+const auth = getAuth(app);
+
 // FCM Messaging（クライアントサイドのみ）
 let messaging: Messaging | undefined;
 if (typeof window !== "undefined") {
@@ -57,4 +61,4 @@ if (typeof window !== "undefined") {
   });
 }
 
-export { app, analytics, db, storage, messaging };
+export { app, analytics, auth, db, storage, messaging };

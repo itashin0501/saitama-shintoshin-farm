@@ -3,17 +3,44 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // This rule allows anyone with your Firestore database reference to view, edit,
-    // and delete all data in your Firestore database. It is useful for getting
-    // started, but it is configured to expire after 30 days because it
-    // leaves your app open to attackers. At that time, all client
-    // requests to your Firestore database will be denied.
-    //
-    // Make sure to write security rules for your app before that time, or else
-    // all client requests to your Firestore database will be denied until you Update
-    // your rules
-    match /{document=**} {
-      allow read, write: if request.time < timestamp.date(2026, 4, 21);
+    // 管理者 = admins/{uid} にドキュメントがあるユーザー
+    // （admins は Firebase コンソールからのみ追加する）
+    function isAdmin() {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    match /admins/{uid} {
+      // 管理画面で自分が管理者かどうかの確認にのみ使う
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow write: if false;
+    }
+
+    // フルーツとやさい畑
+    match /events/{eventId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /announcements/{announcementId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // 参加申込は個人情報を含むため、書き込みはサーバー（Admin SDK）経由のみ
+    match /event-registrations/{registrationId} {
+      allow read, write: if isAdmin();
+    }
+
+    // 花野菜農園（下書きは管理者のみ閲覧可）
+    match /hanayasaiEvents/{eventId} {
+      allow read: if resource.data.isPublished == true || isAdmin();
+      allow write: if isAdmin();
+    }
+
+    match /hanayasaiActivities/{activityId} {
+      allow read: if resource.data.isPublished == true || isAdmin();
+      allow write: if isAdmin();
     }
   }
 }

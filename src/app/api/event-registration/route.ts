@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { getFirestore, FieldValue } from "firebase-admin/firestore";
+import { getFirebaseAdminApp } from "@/lib/firebaseAdmin";
 
 export async function POST(request: Request) {
   try {
@@ -34,14 +34,14 @@ export async function POST(request: Request) {
       adultCount: Number(adultCount) || 0,
       childCount: Number(childCount) || 0,
       message: message || "",
-      createdAt: serverTimestamp(),
+      createdAt: FieldValue.serverTimestamp(),
       status: "pending", // pending, confirmed, cancelled
     };
 
-    const docRef = await addDoc(
-      collection(db, "event-registrations"),
-      registrationData
-    );
+    // 参加者の個人情報を含むため、クライアントからは書き込めないルールにしている
+    const docRef = await getFirestore(getFirebaseAdminApp())
+      .collection("event-registrations")
+      .add(registrationData);
 
     console.log("イベント参加登録が完了しました:", docRef.id);
 

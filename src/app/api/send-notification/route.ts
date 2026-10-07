@@ -1,28 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getMessaging } from "firebase-admin/messaging";
-import { initializeApp, getApps, cert } from "firebase-admin/app";
+import { getFirebaseAdminApp } from "@/lib/firebaseAdmin";
 
 export const dynamic = 'force-dynamic';
 
-// Initialize Firebase Admin SDK lazily
-function initializeFirebaseAdmin() {
-  if (getApps().length === 0) {
-    const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
-
-    if (!serviceAccount) {
-      throw new Error("FIREBASE_SERVICE_ACCOUNT_KEY environment variable is not set");
-    }
-
-    initializeApp({
-      credential: cert(JSON.parse(serviceAccount)),
-      projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-    });
-  }
-}
-
 export async function POST(request: NextRequest) {
   try {
-    initializeFirebaseAdmin();
+    getFirebaseAdminApp();
 
     const { token, title, body, data } = await request.json();
 
