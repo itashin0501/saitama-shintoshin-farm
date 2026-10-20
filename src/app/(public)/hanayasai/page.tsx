@@ -9,6 +9,7 @@ import { introdution, access, experience } from "@/contents/messages";
 import MessageBoardY from "@/components/messageBoardY";
 import ContactInfo from "@/components/hanayasai/ContactInfo";
 import ActivityGallery from "@/components/hanayasai/ActivityGallery";
+import FlyerDownload from "@/components/hanayasai/FlyerDownload";
 import Link from "next/link";
 
 type TabType = "experience" | "pricing" | "faq" | "access";
@@ -258,6 +259,11 @@ export default function Home() {
           </div>
         </>
       )}
+
+      <div className="w-full px-4 mt-8">
+        <TopicLabel title="チラシ" />
+        <FlyerDownload />
+      </div>
 
       <div className="w-full px-4 mt-8">
         <TopicLabel title="お問い合わせ" />
