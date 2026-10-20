@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   addDoc,
   collection,
@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 import Link from "next/link";
 import { db } from "@/lib/firebase";
+import ImageDropzone from "@/components/admin/ImageDropzone";
 import {
   ACTIVITIES_COLLECTION,
   uploadHanayasaiImage,
@@ -27,14 +28,25 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import SaveIcon from "@mui/icons-material/Save";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 
+type PendingPhoto = {
+  key: string;
+  file: File;
+  previewUrl: string;
+  caption: string;
+  error?: string;
+};
+
 export default function HanayasaiActivitiesAdminPage() {
   const [activities, setActivities] = useState<HanayasaiActivity[]>([]);
   const [captions, setCaptions] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
-  const [newFile, setNewFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState("");
-  const [newCaption, setNewCaption] = useState("");
+  const [pending, setPending] = useState<PendingPhoto[]>([]);
+  // アンマウント時にプレビュー用の Object URL を解放するため最新値を保持
+  const pendingRef = useRef(pending);
+  useEffect(() => {
+    pendingRef.current = pending;
+  }, [pending]);
 
   const fetchActivities = async () => {
     try {
@@ -56,42 +68,68 @@ export default function HanayasaiActivitiesAdminPage() {
     fetchActivities();
   }, []);
 
-  const selectFile = (file: File | null) => {
-    setNewFile(file);
-    setPreviewUrl((prev) => {
-      if (prev) URL.revokeObjectURL(prev);
-      return file ? URL.createObjectURL(file) : "";
+  useEffect(
+    () => () => pendingRef.current.forEach((p) => URL.revokeObjectURL(p.previewUrl)),
+    []
+  );
+
+  const addPending = (files: File[]) => {
+    setPending((prev) => [
+      ...prev,
+      ...files.map((file) => ({
+        key: `${file.name}-${file.lastModified}-${Math.random()}`,
+        file,
+        previewUrl: URL.createObjectURL(file),
+        caption: "",
+      })),
+    ]);
+  };
+
+  const updatePending = (key: string, patch: Partial<PendingPhoto>) => {
+    setPending((prev) => prev.map((p) => (p.key === key ? { ...p, ...patch } : p)));
+  };
+
+  const removePending = (key: string) => {
+    setPending((prev) => {
+      const target = prev.find((p) => p.key === key);
+      if (target) URL.revokeObjectURL(target.previewUrl);
+      return prev.filter((p) => p.key !== key);
     });
   };
 
+  // 1枚ずつアップロードし、成功したものから「追加待ち」から外す。失敗したものはエラー表示で残す
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newFile) {
-      alert("写真を選択してください");
-      return;
-    }
+    if (pending.length === 0) return;
 
     setUploading(true);
-    try {
-      const imageUrl = await uploadHanayasaiImage(newFile, "activities");
-      const maxOrder = Math.max(0, ...activities.map((a) => a.order));
-      await addDoc(collection(db, ACTIVITIES_COLLECTION), {
-        imageUrl,
-        caption: newCaption,
-        order: maxOrder + 1,
-        isPublished: true,
-        createdAt: serverTimestamp(),
-      });
-      selectFile(null);
-      setNewCaption("");
-      (e.target as HTMLFormElement).reset();
-      await fetchActivities();
-    } catch (error) {
-      console.error("追加エラー:", error);
-      alert("写真の追加に失敗しました");
-    } finally {
-      setUploading(false);
+    let order = Math.max(0, ...activities.map((a) => a.order));
+    let failed = 0;
+    for (const item of pending) {
+      updatePending(item.key, { error: undefined });
+      try {
+        const { url, thumbnailUrl } = await uploadHanayasaiImage(item.file, "activities");
+        order += 1;
+        await addDoc(collection(db, ACTIVITIES_COLLECTION), {
+          imageUrl: url,
+          thumbnailUrl,
+          caption: item.caption,
+          order,
+          isPublished: true,
+          createdAt: serverTimestamp(),
+        });
+        removePending(item.key);
+      } catch (error) {
+        console.error("追加エラー:", error);
+        failed += 1;
+        updatePending(item.key, {
+          error: error instanceof Error ? error.message : "追加に失敗しました",
+        });
+      }
     }
+    await fetchActivities();
+    setUploading(false);
+    if (failed > 0) alert(`${failed}枚の写真を追加できませんでした`);
   };
 
   const handleSaveCaption = async (id: string) => {
@@ -201,49 +239,70 @@ export default function HanayasaiActivitiesAdminPage() {
           className="bg-white rounded-lg shadow-md p-6 mb-6 space-y-4"
         >
           <h2 className="text-xl font-bold text-gray-800">写真を追加</h2>
-          <label className="flex items-center justify-center w-full px-4 py-6 bg-green-50 border-2 border-green-300 border-dashed rounded-lg cursor-pointer hover:bg-green-100">
-            <div className="flex flex-col items-center">
-              <CloudUploadIcon className="text-green-600 mb-2" />
-              <span className="text-sm text-green-600 font-semibold">
-                {newFile ? newFile.name : "写真を選択"}
-              </span>
-            </div>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => selectFile(e.target.files?.[0] ?? null)}
-              disabled={uploading}
-              className="hidden"
-            />
-          </label>
-          {previewUrl && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={previewUrl}
-              alt="プレビュー"
-              className="max-h-60 rounded-lg border-2 border-gray-200"
-            />
+          <ImageDropzone
+            multiple
+            onFiles={addPending}
+            disabled={uploading}
+            label="写真をここにドラッグ&ドロップ"
+          />
+
+          {pending.length > 0 && (
+            <>
+              <p className="text-sm text-gray-600">
+                キャプションを入力して「追加する」を押してください（あとから編集もできます）
+              </p>
+              <div className="space-y-3">
+                {pending.map((item) => (
+                  <div
+                    key={item.key}
+                    className={`flex flex-col sm:flex-row gap-3 border-2 rounded-lg p-3 ${
+                      item.error ? "border-red-300 bg-red-50" : "border-gray-200"
+                    }`}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={item.previewUrl}
+                      alt={item.file.name}
+                      className="w-full sm:w-36 h-28 object-cover rounded-lg flex-shrink-0"
+                    />
+                    <div className="flex-1 space-y-1">
+                      <textarea
+                        value={item.caption}
+                        onChange={(e) =>
+                          updatePending(item.key, { caption: e.target.value })
+                        }
+                        disabled={uploading}
+                        rows={3}
+                        className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                        placeholder="例: ご家族でじゃがいもの収穫を楽しまれました"
+                      />
+                      {item.error && (
+                        <p className="text-sm text-red-600">{item.error}</p>
+                      )}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => removePending(item.key)}
+                      disabled={uploading}
+                      className="self-start bg-red-50 hover:bg-red-100 text-red-600 px-3 py-2 rounded-lg text-sm disabled:opacity-40"
+                    >
+                      取り消し
+                    </button>
+                  </div>
+                ))}
+              </div>
+              <button
+                type="submit"
+                disabled={uploading}
+                className="flex items-center justify-center bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+              >
+                <CloudUploadIcon className="mr-2" />
+                {uploading
+                  ? "アップロード中..."
+                  : `${pending.length}枚を追加する`}
+              </button>
+            </>
           )}
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
-              キャプション
-            </label>
-            <textarea
-              value={newCaption}
-              onChange={(e) => setNewCaption(e.target.value)}
-              rows={3}
-              className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
-              placeholder="例: ご家族でじゃがいもの収穫を楽しまれました"
-            />
-          </div>
-          <button
-            type="submit"
-            disabled={uploading || !newFile}
-            className="flex items-center justify-center bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-bold py-3 px-6 rounded-lg transition-colors"
-          >
-            <CloudUploadIcon className="mr-2" />
-            {uploading ? "アップロード中..." : "追加する"}
-          </button>
         </form>
 
         {/* 一覧 */}
@@ -271,7 +330,7 @@ export default function HanayasaiActivitiesAdminPage() {
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={activity.imageUrl}
+                    src={activity.thumbnailUrl || activity.imageUrl}
                     alt={activity.caption}
                     className="w-full md:w-48 h-36 object-cover rounded-lg border-2 border-gray-200 flex-shrink-0"
                   />

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { db } from "@/lib/firebase";
 import {
   EVENTS_COLLECTION,
+  eventThumbnail,
   EVENT_TYPE_LABELS,
   formatEventDate,
   isUpcoming,
@@ -113,7 +114,7 @@ export default function HanayasaiEventsAdminPage() {
           ) : (
             <div className="space-y-4">
               {events.map((event) => {
-                const thumbnail = event.coverImage || event.photos?.[0]?.url;
+                const thumbnail = eventThumbnail(event);
                 const ended =
                   event.type === "announcement" && !isUpcoming(event.eventDate);
                 return (

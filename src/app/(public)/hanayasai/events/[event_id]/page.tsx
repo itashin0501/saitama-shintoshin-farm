@@ -8,6 +8,7 @@ import Image from "next/image";
 import { db } from "@/lib/firebase";
 import ContactInfo from "@/components/hanayasai/ContactInfo";
 import TopicLabel from "@/components/topicLabel";
+import Lightbox, { type LightboxImage } from "@/components/hanayasai/Lightbox";
 import {
   EVENTS_COLLECTION,
   EVENT_TYPE_LABELS,
@@ -21,6 +22,7 @@ export default function HanayasaiEventDetailPage() {
 
   const [event, setEvent] = useState<HanayasaiEvent | null>(null);
   const [loading, setLoading] = useState(true);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   useEffect(() => {
     if (!eventId) return;
@@ -67,6 +69,18 @@ export default function HanayasaiEventDetailPage() {
     );
   }
 
+  // ライトボックスではメイン画像 → 写真の順に送れるようにする
+  const photos = event.photos ?? [];
+  const coverOffset = event.coverImage ? 1 : 0;
+  const lightboxImages: LightboxImage[] = [
+    ...(event.coverImage ? [{ src: event.coverImage, alt: event.title }] : []),
+    ...photos.map((photo, i) => ({
+      src: photo.url,
+      caption: photo.caption,
+      alt: photo.caption || `${event.title} ${i + 1}`,
+    })),
+  ];
+
   return (
     <div className="w-full px-4">
       <div className="max-w-4xl mx-auto mt-8 space-y-8">
@@ -79,15 +93,22 @@ export default function HanayasaiEventDetailPage() {
 
         <article className="bg-white rounded-xl shadow-lg overflow-hidden">
           {event.coverImage && (
-            <Image
-              src={event.coverImage}
-              alt={event.title}
-              width={1200}
-              height={800}
-              sizes="(max-width: 896px) 100vw, 896px"
-              className="w-full h-auto"
-              priority
-            />
+            <button
+              type="button"
+              onClick={() => setOpenIndex(0)}
+              className="block w-full cursor-zoom-in"
+              aria-label="メイン画像を拡大表示"
+            >
+              <Image
+                src={event.coverImage}
+                alt={event.title}
+                width={1200}
+                height={800}
+                sizes="(max-width: 896px) 100vw, 896px"
+                className="w-full h-auto"
+                priority
+              />
+            </button>
           )}
           <div className="p-6 md:p-8">
             <span
@@ -117,26 +138,34 @@ export default function HanayasaiEventDetailPage() {
           </div>
         </article>
 
-        {event.photos?.length > 0 && (
+        {photos.length > 0 && (
           <section>
             <TopicLabel title="写真" />
-            <div className="grid gap-6 sm:grid-cols-2">
-              {event.photos.map((photo, index) => (
+            <p className="text-sm text-gray-600 mb-3">
+              写真をタップすると大きく表示されます
+            </p>
+            <div className="grid gap-4 grid-cols-2 md:grid-cols-3">
+              {photos.map((photo, index) => (
                 <figure
                   key={`${photo.url}-${index}`}
                   className="bg-white rounded-xl shadow-md overflow-hidden"
                 >
-                  <div className="relative w-full aspect-[4/3] bg-gray-100">
+                  <button
+                    type="button"
+                    onClick={() => setOpenIndex(coverOffset + index)}
+                    className="relative block w-full aspect-[4/3] bg-gray-100 cursor-zoom-in group"
+                    aria-label={`${photo.caption || `写真 ${index + 1}`}を拡大表示`}
+                  >
                     <Image
-                      src={photo.url}
+                      src={photo.thumbnailUrl || photo.url}
                       alt={photo.caption || `${event.title} ${index + 1}`}
                       fill
-                      sizes="(max-width: 640px) 100vw, 440px"
-                      className="object-cover"
+                      sizes="(max-width: 768px) 50vw, 290px"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
-                  </div>
+                  </button>
                   {photo.caption && (
-                    <figcaption className="p-4 text-gray-700 whitespace-pre-wrap">
+                    <figcaption className="p-3 text-sm text-gray-700 whitespace-pre-wrap line-clamp-3">
                       {photo.caption}
                     </figcaption>
                   )}
@@ -145,6 +174,12 @@ export default function HanayasaiEventDetailPage() {
             </div>
           </section>
         )}
+
+        <Lightbox
+          images={lightboxImages}
+          index={openIndex}
+          onIndexChange={setOpenIndex}
+        />
 
         {event.type === "announcement" && (
           <section>

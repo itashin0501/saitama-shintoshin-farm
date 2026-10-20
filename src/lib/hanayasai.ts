@@ -1,6 +1,6 @@
 import { Timestamp } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { storage } from "@/lib/firebase";
+import { auth } from "@/lib/firebase";
+import { MAX_UPLOAD_BYTES } from "@/lib/uploadLimits";
 
 export const ACTIVITIES_COLLECTION = "hanayasaiActivities";
 export const EVENTS_COLLECTION = "hanayasaiEvents";
@@ -9,6 +9,8 @@ export const EVENTS_COLLECTION = "hanayasaiEvents";
 export type HanayasaiActivity = {
   id: string;
   imageUrl: string;
+  // サムネイル追加前に登録された写真には無い
+  thumbnailUrl?: string;
   caption: string;
   order: number;
   isPublished: boolean;
@@ -24,6 +26,7 @@ export const EVENT_TYPE_LABELS: Record<HanayasaiEventType, string> = {
 
 export type EventPhoto = {
   url: string;
+  thumbnailUrl?: string;
   caption: string;
 };
 
@@ -36,22 +39,50 @@ export type HanayasaiEvent = {
   place: string;
   body: string;
   coverImage: string;
+  coverThumbnail?: string;
   photos: EventPhoto[];
   isPublished: boolean;
   createdAt?: Timestamp;
   updatedAt?: Timestamp;
 };
 
+// 一覧用の画像。メイン画像 → 1枚目の写真の順に、サムネイルが無ければ元画像を使う
+export function eventThumbnail(event: HanayasaiEvent): string | undefined {
+  if (event.coverImage) return event.coverThumbnail || event.coverImage;
+  const first = event.photos?.[0];
+  return first ? first.thumbnailUrl || first.url : undefined;
+}
+
+export type UploadedImage = {
+  url: string; // 表示用（長辺 1920px）
+  thumbnailUrl: string; // 一覧用（長辺 600px）
+};
+
+// サーバー（/api/hanayasai/upload）で表示用とサムネイルを生成して Storage に保存する
 export async function uploadHanayasaiImage(
   file: File,
   folder: "activities" | "events"
-): Promise<string> {
-  const storageRef = ref(
-    storage,
-    `hanayasai/${folder}/${Date.now()}_${file.name}`
-  );
-  await uploadBytes(storageRef, file);
-  return getDownloadURL(storageRef);
+): Promise<UploadedImage> {
+  const user = auth.currentUser;
+  if (!user) throw new Error("ログインが必要です");
+  if (file.size > MAX_UPLOAD_BYTES) {
+    throw new Error(`${file.name} は20MBを超えています`);
+  }
+
+  const body = new FormData();
+  body.append("file", file);
+  body.append("folder", folder);
+
+  const res = await fetch("/api/hanayasai/upload", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${await user.getIdToken()}` },
+    body,
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(data.error || `${file.name} のアップロードに失敗しました`);
+  }
+  return data as UploadedImage;
 }
 
 // "YYYY-MM-DD" をローカルタイムの日付として扱う（UTC解釈による日付ずれを防ぐ）

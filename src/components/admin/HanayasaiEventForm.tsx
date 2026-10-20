@@ -11,6 +11,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import ImageDropzone from "@/components/admin/ImageDropzone";
 import {
   EVENTS_COLLECTION,
   EVENT_TYPE_LABELS,
@@ -23,7 +24,6 @@ import {
 } from "@/lib/hanayasai";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
@@ -43,7 +43,8 @@ export default function HanayasaiEventForm({
 }: HanayasaiEventFormProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [uploading, setUploading] = useState(false);
+  const [uploading, setUploading] = useState<"cover" | "photos" | null>(null);
+  const [progress, setProgress] = useState({ done: 0, total: 0 });
   const [dateInput, setDateInput] = useState("");
   const [formData, setFormData] = useState<FormData>({
     type: "announcement",
@@ -52,6 +53,7 @@ export default function HanayasaiEventForm({
     place: "花野菜農園",
     body: "",
     coverImage: "",
+    coverThumbnail: "",
     photos: [],
     isPublished: false,
   });
@@ -70,6 +72,7 @@ export default function HanayasaiEventForm({
             place: data.place ?? "",
             body: data.body ?? "",
             coverImage: data.coverImage ?? "",
+            coverThumbnail: data.coverThumbnail ?? "",
             photos: data.photos ?? [],
             isPublished: data.isPublished ?? false,
           });
@@ -83,42 +86,44 @@ export default function HanayasaiEventForm({
     fetchEvent();
   }, [mode, eventId]);
 
-  const handleCoverUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    e.target.value = "";
-    if (!file) return;
-
-    setUploading(true);
+  const handleCoverUpload = async ([file]: File[]) => {
+    setUploading("cover");
     try {
-      const url = await uploadHanayasaiImage(file, "events");
-      setFormData((prev) => ({ ...prev, coverImage: url }));
-    } catch (error) {
-      console.error("画像アップロードエラー:", error);
-      alert("画像のアップロードに失敗しました");
-    } finally {
-      setUploading(false);
-    }
-  };
-
-  const handlePhotosUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files ?? []);
-    e.target.value = "";
-    if (files.length === 0) return;
-
-    setUploading(true);
-    try {
-      const urls = await Promise.all(
-        files.map((file) => uploadHanayasaiImage(file, "events"))
-      );
+      const { url, thumbnailUrl } = await uploadHanayasaiImage(file, "events");
       setFormData((prev) => ({
         ...prev,
-        photos: [...prev.photos, ...urls.map((url) => ({ url, caption: "" }))],
+        coverImage: url,
+        coverThumbnail: thumbnailUrl,
       }));
     } catch (error) {
       console.error("画像アップロードエラー:", error);
-      alert("画像のアップロードに失敗しました");
+      alert(error instanceof Error ? error.message : "画像のアップロードに失敗しました");
     } finally {
-      setUploading(false);
+      setUploading(null);
+    }
+  };
+
+  // 1枚ずつアップロードし、成功したものから順に写真一覧へ追加する
+  const handlePhotosUpload = async (files: File[]) => {
+    setUploading("photos");
+    setProgress({ done: 0, total: files.length });
+    const errors: string[] = [];
+    for (const file of files) {
+      try {
+        const { url, thumbnailUrl } = await uploadHanayasaiImage(file, "events");
+        setFormData((prev) => ({
+          ...prev,
+          photos: [...prev.photos, { url, thumbnailUrl, caption: "" }],
+        }));
+      } catch (error) {
+        console.error("画像アップロードエラー:", error);
+        errors.push(error instanceof Error ? error.message : file.name);
+      }
+      setProgress((prev) => ({ ...prev, done: prev.done + 1 }));
+    }
+    setUploading(null);
+    if (errors.length > 0) {
+      alert(`アップロードできなかった写真があります\n${errors.join("\n")}`);
     }
   };
 
@@ -301,13 +306,15 @@ export default function HanayasaiEventForm({
           <div className="mb-4 relative inline-block">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={formData.coverImage}
+              src={formData.coverThumbnail || formData.coverImage}
               alt="メイン画像"
-              className="max-w-md max-h-80 rounded-lg border-2 border-gray-200"
+              className="max-w-xs max-h-60 rounded-lg border-2 border-gray-200"
             />
             <button
               type="button"
-              onClick={() => setFormData({ ...formData, coverImage: "" })}
+              onClick={() =>
+                setFormData({ ...formData, coverImage: "", coverThumbnail: "" })
+              }
               className="absolute top-1 right-1 bg-red-600 text-white rounded-full w-7 h-7 flex items-center justify-center hover:bg-red-700"
               aria-label="メイン画像を削除"
             >
@@ -315,21 +322,12 @@ export default function HanayasaiEventForm({
             </button>
           </div>
         )}
-        <label className="flex items-center justify-center w-full px-4 py-6 bg-green-50 border-2 border-green-300 border-dashed rounded-lg cursor-pointer hover:bg-green-100">
-          <div className="flex flex-col items-center">
-            <CloudUploadIcon className="text-green-600 mb-2" />
-            <span className="text-sm text-green-600 font-semibold">
-              {uploading ? "アップロード中..." : "メイン画像を選択"}
-            </span>
-          </div>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleCoverUpload}
-            disabled={uploading}
-            className="hidden"
-          />
-        </label>
+        <ImageDropzone
+          onFiles={handleCoverUpload}
+          disabled={uploading !== null}
+          busyLabel={uploading === "cover" ? "アップロード中..." : "写真のアップロード完了をお待ちください"}
+          label={formData.coverImage ? "メイン画像を差し替える" : "メイン画像をドラッグ&ドロップ"}
+        />
       </div>
 
       {/* 写真 */}
@@ -347,7 +345,7 @@ export default function HanayasaiEventForm({
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={photo.url}
+                  src={photo.thumbnailUrl || photo.url}
                   alt={`写真 ${index + 1}`}
                   className="w-full md:w-40 h-32 object-cover rounded-lg flex-shrink-0"
                 />
@@ -389,22 +387,18 @@ export default function HanayasaiEventForm({
             ))}
           </div>
         )}
-        <label className="flex items-center justify-center w-full px-4 py-6 bg-blue-50 border-2 border-blue-300 border-dashed rounded-lg cursor-pointer hover:bg-blue-100">
-          <div className="flex flex-col items-center">
-            <CloudUploadIcon className="text-blue-600 mb-2" />
-            <span className="text-sm text-blue-600 font-semibold">
-              {uploading ? "アップロード中..." : "写真を追加"}
-            </span>
-          </div>
-          <input
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={handlePhotosUpload}
-            disabled={uploading}
-            className="hidden"
-          />
-        </label>
+        <ImageDropzone
+          multiple
+          color="blue"
+          onFiles={handlePhotosUpload}
+          disabled={uploading !== null}
+          busyLabel={
+            uploading === "photos"
+              ? `アップロード中...（${progress.done} / ${progress.total}）`
+              : "メイン画像のアップロード完了をお待ちください"
+          }
+          label="写真をドラッグ&ドロップ"
+        />
       </div>
 
       {/* 公開設定 */}
@@ -429,7 +423,7 @@ export default function HanayasaiEventForm({
       <div className="flex gap-4">
         <button
           type="submit"
-          disabled={loading || uploading}
+          disabled={loading || uploading !== null}
           className="flex-1 flex items-center justify-center bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-bold py-4 px-6 rounded-lg transition-colors"
         >
           <SaveIcon className="mr-2" />

@@ -9,6 +9,7 @@ import TopicLabel from "@/components/topicLabel";
 import ContactInfo from "@/components/hanayasai/ContactInfo";
 import {
   EVENTS_COLLECTION,
+  eventThumbnail,
   formatEventDate,
   isUpcoming,
   type HanayasaiEvent,
@@ -107,7 +108,7 @@ export default function HanayasaiEventsPage() {
 }
 
 function EventCard({ event }: { event: HanayasaiEvent }) {
-  const thumbnail = event.coverImage || event.photos?.[0]?.url;
+  const thumbnail = eventThumbnail(event);
 
   return (
     <Link
