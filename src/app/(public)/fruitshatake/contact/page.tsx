@@ -6,7 +6,7 @@ import ContactForm from "@/components/fruitshatake/ContactForm";
 export default function ContactPage() {
   return (
     <div className="w-full px-4">
-      <TopicLabel title="お問い合わせ" />
+      <TopicLabel title="お問い合わせ" className="max-w-4xl mx-auto" />
 
       <div className="max-w-4xl mx-auto mt-8 space-y-8">
         <div className="bg-green-100 rounded-xl p-6">

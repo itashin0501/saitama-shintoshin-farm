@@ -94,7 +94,7 @@ export default function FAQPage() {
 
   return (
     <div className="w-full px-4">
-      <TopicLabel title="よくある質問" />
+      <TopicLabel title="よくある質問" className="max-w-4xl mx-auto" />
 
       <div className="max-w-4xl mx-auto mt-8 space-y-8">
         <div className="bg-yellow-100 rounded-xl p-6">

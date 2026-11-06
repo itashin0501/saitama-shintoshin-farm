@@ -5,7 +5,7 @@ import TopicLabel from "@/components/topicLabel";
 export default function FacilitiesPage() {
   return (
     <div className="w-full px-4">
-      <TopicLabel title="設備について" />
+      <TopicLabel title="設備について" className="max-w-4xl mx-auto" />
 
       <div className="max-w-4xl mx-auto mt-8 space-y-8">
         <div className="bg-green-100 rounded-xl p-6">

@@ -61,59 +61,61 @@ export default function Home() {
       {/* タブコンテンツ */}
       {activeTab === "experience" && (
         <>
-          <TopicLabel title="体験" />
           <div className="flex justify-center mb-8">
-            <div className="mt-4 grid gap-8 lg:max-w-[900px] xl:max-w-[1300px] grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-              <MessageBoard title="えらぶ" text={experience.make}>
-                <Image
-                  src="/images/taiken-1.png"
-                  width={480 / 2}
-                  height={200 / 2}
-                  alt={"taiken-1"}
-                />
-              </MessageBoard>
-              <MessageBoard title="あそぶ" text={experience.play}>
-                <Image
-                  src="/images/taiken-2.png"
-                  width={350 / 2.5}
-                  height={220 / 2.5}
-                  alt={"taiken-2"}
-                  className="relative left-20 -top-16 xs:top-0"
-                />
-              </MessageBoard>
-              <MessageBoard title="まなぶ" text={experience.learn}>
-                <Image
-                  src="/images/taiken-3.png"
-                  width={400 / 1.7}
-                  height={169 / 1.7}
-                  alt={"taiken-3"}
-                  className="relative -top-4 xs:top-0"
-                />
-              </MessageBoard>
-              <MessageBoardY
-                title="充実した設備をご用意しております"
-                text={experience.facility}
-              >
-                <Image
-                  src="/images/taiken-4.png"
-                  width={284 / 2}
-                  height={204 / 2}
-                  alt={"taiken-4"}
-                  className="relative -top-8 xs:top-2 left-16"
-                />
-              </MessageBoardY>
-              <MessageBoardY
-                title="プライベートパーク利用"
-                text={experience.privatePark}
-              >
-                <Image
-                  src="/images/remotework.jpg"
-                  width={640 / 4}
-                  height={480 / 4}
-                  alt={"taiken-5"}
-                  className="rounded-lg"
-                />
-              </MessageBoardY>
+            <div>
+              <TopicLabel title="体験" />
+              <div className="mt-4 grid gap-8 lg:max-w-[900px] xl:max-w-[1300px] grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+                <MessageBoard title="えらぶ" text={experience.make}>
+                  <Image
+                    src="/images/taiken-1.png"
+                    width={480 / 2}
+                    height={200 / 2}
+                    alt={"taiken-1"}
+                  />
+                </MessageBoard>
+                <MessageBoard title="あそぶ" text={experience.play}>
+                  <Image
+                    src="/images/taiken-2.png"
+                    width={350 / 2.5}
+                    height={220 / 2.5}
+                    alt={"taiken-2"}
+                    className="relative left-20 -top-16 xs:top-0"
+                  />
+                </MessageBoard>
+                <MessageBoard title="まなぶ" text={experience.learn}>
+                  <Image
+                    src="/images/taiken-3.png"
+                    width={400 / 1.7}
+                    height={169 / 1.7}
+                    alt={"taiken-3"}
+                    className="relative -top-4 xs:top-0"
+                  />
+                </MessageBoard>
+                <MessageBoardY
+                  title="充実した設備をご用意しております"
+                  text={experience.facility}
+                >
+                  <Image
+                    src="/images/taiken-4.png"
+                    width={284 / 2}
+                    height={204 / 2}
+                    alt={"taiken-4"}
+                    className="relative -top-8 xs:top-2 left-16"
+                  />
+                </MessageBoardY>
+                <MessageBoardY
+                  title="プライベートパーク利用"
+                  text={experience.privatePark}
+                >
+                  <Image
+                    src="/images/remotework.jpg"
+                    width={640 / 4}
+                    height={480 / 4}
+                    alt={"taiken-5"}
+                    className="rounded-lg"
+                  />
+                </MessageBoardY>
+              </div>
             </div>
           </div>
           <ActivityGallery />
@@ -122,7 +124,7 @@ export default function Home() {
 
       {activeTab === "pricing" && (
         <div className="w-full px-4">
-          <TopicLabel title="料金について" />
+          <TopicLabel title="料金について" className="max-w-4xl mx-auto" />
           <div className="max-w-4xl mx-auto mt-8 space-y-8">
             <div className="grid md:grid-cols-2 gap-6">
               <div className="bg-white rounded-xl shadow-lg p-6 border-2 border-yellow-300">
@@ -163,7 +165,7 @@ export default function Home() {
 
       {activeTab === "faq" && (
         <div className="w-full px-4">
-          <TopicLabel title="よくある質問" />
+          <TopicLabel title="よくある質問" className="max-w-4xl mx-auto" />
           <div className="max-w-4xl mx-auto mt-8 space-y-8">
             <div className="bg-yellow-100 rounded-xl p-6">
               <h2 className="text-2xl font-bold text-yellow-800 mb-4">FAQ</h2>

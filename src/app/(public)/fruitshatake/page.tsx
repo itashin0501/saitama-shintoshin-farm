@@ -14,7 +14,7 @@ import AnnouncementList from "@/components/fruitshatake/AnnouncementList";
 export default function Home() {
   return (
     <div className="w-full">
-      <TopicLabel title="お知らせ" />
+      <TopicLabel title="お知らせ" className="max-w-[832px] mx-auto px-4" />
 
       <div className="flex flex-col items-center justify-center mb-8 px-4 gap-4">
         <div className="w-full max-w-[800px]">
@@ -30,77 +30,81 @@ export default function Home() {
         </div>
       </div>
 
-      <TopicLabel title="スケジュール" />
       <div className="flex justify-center mb-8">
-        <Schedule className="w-[340px] sm:w-[400px] md:w-[600px] lg:w-[800px]" />
+        <div>
+          <TopicLabel title="スケジュール" />
+          <Schedule className="w-[340px] sm:w-[400px] md:w-[600px] lg:w-[800px]" />
+        </div>
       </div>
 
-      <TopicLabel title="体験" />
       <div className="flex justify-center mb-8">
-        <div className="mt-4 grid gap-8 lg:max-w-[900px] xl:max-w-[1300px] grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-          <MessageBoard title="えらぶ" text={experience.select}>
-            <Image
-              src="/images/taikenf-1.png"
-              width={480 / 1.5}
-              height={200 / 1.5}
-              alt={"taiken-1"}
-            />
-          </MessageBoard>
-          <MessageBoard title="そだてる" text={experience.nurture}>
-            <Image
-              src="/images/taikenf-2.png"
-              width={350 / 1.8}
-              height={220 / 1.8}
-              alt={"taiken-2"}
-              className="relative left-20 top-0"
-            />
-          </MessageBoard>
-          <MessageBoard title="まなぶ" text={experience.learn}>
-            <Image
-              src="/images/taikenf-3.png"
-              width={400 / 1.7}
-              height={169 / 1.7}
-              alt={"taiken-3"}
-              className="relative -top-4 xs:top-0"
-            />
-          </MessageBoard>
-          <MessageBoardY
-            title="充実した設備をご用意しております"
-            text={experience.facility}
-          >
-            <Image
-              src="/images/taiken-4.png"
-              width={284 / 2}
-              height={204 / 2}
-              alt={"taiken-4"}
-              className="relative -top-8 xs:top-2 left-16"
-            />
-          </MessageBoardY>
-          <MessageBoardY
-            title="プライベートパーク利用"
-            text={experience.privatePark}
-          >
-            <Image
-              src="/images/pizza.jpg"
-              width={1000 / 3.5}
-              height={400 / 3.5}
-              alt={"taiken-5"}
-              className="rounded-lg"
-            />
-          </MessageBoardY>
-          <MessageBoardY
-            title="プライベートパーク利用"
-            textContent={experience.spaceMarket}
-          >
-            <div className="relative w-[90px] xs:w-[140px] aspect-square">
+        <div>
+          <TopicLabel title="体験" />
+          <div className="mt-4 grid gap-8 lg:max-w-[900px] xl:max-w-[1300px] grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+            <MessageBoard title="えらぶ" text={experience.select}>
               <Image
-                src="/images/fruitshatake-spmk-qrcode.png"
-                fill
-                alt={"qr-spaceMarket"}
-                className="rounded-lg object-contain"
+                src="/images/taikenf-1.png"
+                width={480 / 1.5}
+                height={200 / 1.5}
+                alt={"taiken-1"}
               />
-            </div>
-          </MessageBoardY>
+            </MessageBoard>
+            <MessageBoard title="そだてる" text={experience.nurture}>
+              <Image
+                src="/images/taikenf-2.png"
+                width={350 / 1.8}
+                height={220 / 1.8}
+                alt={"taiken-2"}
+                className="relative left-20 top-0"
+              />
+            </MessageBoard>
+            <MessageBoard title="まなぶ" text={experience.learn}>
+              <Image
+                src="/images/taikenf-3.png"
+                width={400 / 1.7}
+                height={169 / 1.7}
+                alt={"taiken-3"}
+                className="relative -top-4 xs:top-0"
+              />
+            </MessageBoard>
+            <MessageBoardY
+              title="充実した設備をご用意しております"
+              text={experience.facility}
+            >
+              <Image
+                src="/images/taiken-4.png"
+                width={284 / 2}
+                height={204 / 2}
+                alt={"taiken-4"}
+                className="relative -top-8 xs:top-2 left-16"
+              />
+            </MessageBoardY>
+            <MessageBoardY
+              title="プライベートパーク利用"
+              text={experience.privatePark}
+            >
+              <Image
+                src="/images/pizza.jpg"
+                width={1000 / 3.5}
+                height={400 / 3.5}
+                alt={"taiken-5"}
+                className="rounded-lg"
+              />
+            </MessageBoardY>
+            <MessageBoardY
+              title="プライベートパーク利用"
+              textContent={experience.spaceMarket}
+            >
+              <div className="relative w-[90px] xs:w-[140px] aspect-square">
+                <Image
+                  src="/images/fruitshatake-spmk-qrcode.png"
+                  fill
+                  alt={"qr-spaceMarket"}
+                  className="rounded-lg object-contain"
+                />
+              </div>
+            </MessageBoardY>
+          </div>
         </div>
       </div>
       <TopicLabel title="アクセス" />

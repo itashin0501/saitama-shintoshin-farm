@@ -6,7 +6,7 @@ import ContactInfo from "@/components/hanayasai/ContactInfo";
 export default function PricingPage() {
   return (
     <div className="w-full px-4">
-      <TopicLabel title="料金について" />
+      <TopicLabel title="料金について" className="max-w-4xl mx-auto" />
 
       <div className="max-w-4xl mx-auto mt-8 space-y-8">
         <div className="grid md:grid-cols-2 gap-6">
