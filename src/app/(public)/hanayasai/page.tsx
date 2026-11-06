@@ -3,7 +3,7 @@
 import { useState } from "react";
 import MessageBoard from "@/components/messageBoard";
 import Toptitle from "@/components/hanayasai/topTitle";
-import TopicLabel from "@/components/topicLabel";
+import TopicLabel, { pageColumn } from "@/components/topicLabel";
 import Image from "next/image";
 import { introdution, access, experience } from "@/contents/messages";
 import MessageBoardY from "@/components/messageBoardY";
@@ -61,61 +61,59 @@ export default function Home() {
       {/* タブコンテンツ */}
       {activeTab === "experience" && (
         <>
+          <TopicLabel title="体験" className={pageColumn} />
           <div className="flex justify-center mb-8">
-            <div>
-              <TopicLabel title="体験" />
-              <div className="mt-4 grid gap-8 lg:max-w-[900px] xl:max-w-[1300px] grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-                <MessageBoard title="えらぶ" text={experience.make}>
-                  <Image
-                    src="/images/taiken-1.png"
-                    width={480 / 2}
-                    height={200 / 2}
-                    alt={"taiken-1"}
-                  />
-                </MessageBoard>
-                <MessageBoard title="あそぶ" text={experience.play}>
-                  <Image
-                    src="/images/taiken-2.png"
-                    width={350 / 2.5}
-                    height={220 / 2.5}
-                    alt={"taiken-2"}
-                    className="relative left-20 -top-16 xs:top-0"
-                  />
-                </MessageBoard>
-                <MessageBoard title="まなぶ" text={experience.learn}>
-                  <Image
-                    src="/images/taiken-3.png"
-                    width={400 / 1.7}
-                    height={169 / 1.7}
-                    alt={"taiken-3"}
-                    className="relative -top-4 xs:top-0"
-                  />
-                </MessageBoard>
-                <MessageBoardY
-                  title="充実した設備をご用意しております"
-                  text={experience.facility}
-                >
-                  <Image
-                    src="/images/taiken-4.png"
-                    width={284 / 2}
-                    height={204 / 2}
-                    alt={"taiken-4"}
-                    className="relative -top-8 xs:top-2 left-16"
-                  />
-                </MessageBoardY>
-                <MessageBoardY
-                  title="プライベートパーク利用"
-                  text={experience.privatePark}
-                >
-                  <Image
-                    src="/images/remotework.jpg"
-                    width={640 / 4}
-                    height={480 / 4}
-                    alt={"taiken-5"}
-                    className="rounded-lg"
-                  />
-                </MessageBoardY>
-              </div>
+            <div className="mt-4 grid gap-8 lg:max-w-[900px] xl:max-w-[1300px] grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+              <MessageBoard title="えらぶ" text={experience.make}>
+                <Image
+                  src="/images/taiken-1.png"
+                  width={480 / 2}
+                  height={200 / 2}
+                  alt={"taiken-1"}
+                />
+              </MessageBoard>
+              <MessageBoard title="あそぶ" text={experience.play}>
+                <Image
+                  src="/images/taiken-2.png"
+                  width={350 / 2.5}
+                  height={220 / 2.5}
+                  alt={"taiken-2"}
+                  className="relative left-20 -top-16 xs:top-0"
+                />
+              </MessageBoard>
+              <MessageBoard title="まなぶ" text={experience.learn}>
+                <Image
+                  src="/images/taiken-3.png"
+                  width={400 / 1.7}
+                  height={169 / 1.7}
+                  alt={"taiken-3"}
+                  className="relative -top-4 xs:top-0"
+                />
+              </MessageBoard>
+              <MessageBoardY
+                title="充実した設備をご用意しております"
+                text={experience.facility}
+              >
+                <Image
+                  src="/images/taiken-4.png"
+                  width={284 / 2}
+                  height={204 / 2}
+                  alt={"taiken-4"}
+                  className="relative -top-8 xs:top-2 left-16"
+                />
+              </MessageBoardY>
+              <MessageBoardY
+                title="プライベートパーク利用"
+                text={experience.privatePark}
+              >
+                <Image
+                  src="/images/remotework.jpg"
+                  width={640 / 4}
+                  height={480 / 4}
+                  alt={"taiken-5"}
+                  className="rounded-lg"
+                />
+              </MessageBoardY>
             </div>
           </div>
           <ActivityGallery />
@@ -124,8 +122,8 @@ export default function Home() {
 
       {activeTab === "pricing" && (
         <div className="w-full px-4">
-          <TopicLabel title="料金について" className="max-w-4xl mx-auto" />
-          <div className="max-w-4xl mx-auto mt-8 space-y-8">
+          <TopicLabel title="料金について" className={pageColumn} />
+          <div className={`${pageColumn} mt-8 space-y-8`}>
             <div className="grid md:grid-cols-2 gap-6">
               <div className="bg-white rounded-xl shadow-lg p-6 border-2 border-yellow-300">
                 <h3 className="text-xl font-bold text-green-800 mb-4">
@@ -165,8 +163,8 @@ export default function Home() {
 
       {activeTab === "faq" && (
         <div className="w-full px-4">
-          <TopicLabel title="よくある質問" className="max-w-4xl mx-auto" />
-          <div className="max-w-4xl mx-auto mt-8 space-y-8">
+          <TopicLabel title="よくある質問" className={pageColumn} />
+          <div className={`${pageColumn} mt-8 space-y-8`}>
             <div className="bg-yellow-100 rounded-xl p-6">
               <h2 className="text-2xl font-bold text-yellow-800 mb-4">FAQ</h2>
               <p className="text-lg leading-relaxed">
@@ -242,8 +240,8 @@ export default function Home() {
 
       {activeTab === "access" && (
         <>
-          <TopicLabel title="アクセス" />
-          <div className="flex flex-col mb-8">
+          <TopicLabel title="アクセス" className={pageColumn} />
+          <div className={`${pageColumn} flex flex-col mb-8`}>
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2565.0407512517363!2d139.660448891735!3d35.89113519827244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6018c1a19204a663%3A0xbdfb95dfe12b7a01!2z6Iqx6YeO6I-c6L6y5ZyS!5e0!3m2!1sja!2sjp!4v1741101175985!5m2!1sja!2sjp"
               className="w-full h-[420px] border-2 border-gray-300 rounded-lg"
@@ -263,14 +261,17 @@ export default function Home() {
       )}
 
       <div className="w-full px-4 mt-8">
-        <TopicLabel title="チラシ" />
-        <FlyerDownload />
+        <TopicLabel title="チラシ" className={pageColumn} />
+        <div className={pageColumn}>
+          <FlyerDownload />
+        </div>
       </div>
 
       <div className="w-full px-4 mt-8">
-        <TopicLabel title="お問い合わせ" />
-
-        <ContactInfo />
+        <TopicLabel title="お問い合わせ" className={pageColumn} />
+        <div className={pageColumn}>
+          <ContactInfo />
+        </div>
       </div>
     </div>
   );

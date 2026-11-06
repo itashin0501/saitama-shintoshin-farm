@@ -4,6 +4,11 @@ interface TopicProps {
   className?: string;
 }
 
+// TOPページ共通の列幅。体験カード（334/400px）の 1〜3 列グリッドの幅と一致させ、
+// どのセクションのラベル・中身も同じ左端に揃える
+export const pageColumn =
+  "w-full mx-auto max-w-[334px] xs:max-w-[400px] lg:max-w-[832px] xl:max-w-[1264px]";
+
 export default function TopicLabel({ title, className = "" }: TopicProps) {
   return (
     <div className={`w-full mb-4 ${className}`}>

@@ -6,7 +6,7 @@ import Image from "next/image";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { db } from "@/lib/firebase";
-import TopicLabel from "@/components/topicLabel";
+import TopicLabel, { pageColumn } from "@/components/topicLabel";
 import Lightbox from "@/components/hanayasai/Lightbox";
 import {
   ACTIVITIES_COLLECTION,
@@ -112,13 +112,13 @@ function ActivitySection({ section }: { section: GallerySection }) {
 
   return (
     <>
-      <TopicLabel title={title} />
+      <TopicLabel title={title} className={pageColumn} />
       <div className="flex justify-center mb-8">
-        <div className="relative w-full max-w-[1300px]">
+        <div className={`relative ${pageColumn}`}>
           <div
             ref={scrollerRef}
             onScroll={updateArrows}
-            className="mt-4 flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-px-4 px-4 pb-4"
+            className="mt-4 flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4"
           >
             {photos.map((activity, index) => (
               <figure
