@@ -1,5 +1,7 @@
 import { initializeApp, getApps, cert, App } from "firebase-admin/app";
 
+const PROJECT_ID = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "fruits-hatake";
+
 // サーバーサイド専用。Firestore ルールを経由せずに書き込むため、API ルートからのみ使用すること
 export function getFirebaseAdminApp(): App {
   const existing = getApps()[0];
@@ -7,7 +9,9 @@ export function getFirebaseAdminApp(): App {
 
   const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
   if (!serviceAccount) {
-    throw new Error("FIREBASE_SERVICE_ACCOUNT_KEY environment variable is not set");
+    // App Hosting（Cloud Run）上ではキーが無くても実行環境のサービスアカウント
+    // （Application Default Credentials）で認証できる
+    return initializeApp({ projectId: PROJECT_ID });
   }
 
   const credentials = JSON.parse(serviceAccount);
@@ -16,6 +20,6 @@ export function getFirebaseAdminApp(): App {
 
   return initializeApp({
     credential: cert(credentials),
-    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    projectId: PROJECT_ID,
   });
 }
