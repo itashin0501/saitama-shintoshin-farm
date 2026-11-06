@@ -3,11 +3,26 @@ import { auth } from "@/lib/firebase";
 import { MAX_UPLOAD_BYTES } from "@/lib/uploadLimits";
 
 export const ACTIVITIES_COLLECTION = "hanayasaiActivities";
+export const ACTIVITY_SECTIONS_COLLECTION = "hanayasaiActivitySections";
 export const EVENTS_COLLECTION = "hanayasaiEvents";
 
-// TOPページ「利用の様子」の写真
+// 項目機能の追加前に登録された写真をまとめる項目の名前
+export const LEGACY_SECTION_TITLE = "利用の様子";
+
+// TOPページ「体験」の下に並ぶ項目（見出し）。写真は sectionId で紐づく
+export type HanayasaiActivitySection = {
+  id: string;
+  title: string;
+  order: number;
+  isPublished: boolean;
+  createdAt?: Timestamp;
+};
+
+// 項目内の写真。order は項目内での並び順
 export type HanayasaiActivity = {
   id: string;
+  // 項目機能の追加前に登録された写真には無い（管理画面を開くと自動で付与される）
+  sectionId?: string;
   imageUrl: string;
   // サムネイル追加前に登録された写真には無い
   thumbnailUrl?: string;

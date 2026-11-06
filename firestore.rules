@@ -42,5 +42,10 @@ service cloud.firestore {
       allow read: if resource.data.isPublished == true || isAdmin();
       allow write: if isAdmin();
     }
+
+    match /hanayasaiActivitySections/{sectionId} {
+      allow read: if resource.data.isPublished == true || isAdmin();
+      allow write: if isAdmin();
+    }
   }
 }
