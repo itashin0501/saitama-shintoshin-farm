@@ -42,7 +42,9 @@ export default function AdminUsersPage() {
       body: body ? JSON.stringify(body) : undefined,
     });
     const data = await res.json().catch(() => ({}));
-    if (!res.ok) throw new Error(data.error || "処理に失敗しました");
+    if (!res.ok) {
+      throw new Error(data.error || `処理に失敗しました（${res.status}）`);
+    }
     return data;
   };
 
