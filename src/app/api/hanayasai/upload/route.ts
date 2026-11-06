@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import { randomUUID } from "crypto";
 import sharp from "sharp";
-import { getAuth } from "firebase-admin/auth";
-import { getFirestore } from "firebase-admin/firestore";
 import { getStorage } from "firebase-admin/storage";
 import { getFirebaseAdminApp } from "@/lib/firebaseAdmin";
 import { MAX_UPLOAD_BYTES } from "@/lib/uploadLimits";
+import { verifyAdminRequest } from "@/lib/adminAuth";
+import { canManageSite } from "@/lib/adminRoles";
 
 export const dynamic = "force-dynamic";
 
@@ -22,20 +22,6 @@ const VARIANTS = {
   thumb: { size: 600, quality: 75 },
 } as const;
 
-// Firestore ルールと同じく admins/{uid} の有無で管理者を判定する
-async function verifyAdmin(request: Request): Promise<boolean> {
-  const token = request.headers.get("authorization")?.match(/^Bearer (.+)$/)?.[1];
-  if (!token) return false;
-  try {
-    const app = getFirebaseAdminApp();
-    const { uid } = await getAuth(app).verifyIdToken(token);
-    const adminDoc = await getFirestore(app).doc(`admins/${uid}`).get();
-    return adminDoc.exists;
-  } catch {
-    return false;
-  }
-}
-
 async function saveVariant(path: string, buffer: Buffer): Promise<string> {
   const bucket = getStorage(getFirebaseAdminApp()).bucket(BUCKET);
   const token = randomUUID();
@@ -51,7 +37,8 @@ async function saveVariant(path: string, buffer: Buffer): Promise<string> {
 }
 
 export async function POST(request: Request) {
-  if (!(await verifyAdmin(request))) {
+  const admin = await verifyAdminRequest(request);
+  if (!admin || !canManageSite(admin.role, "hanayasai")) {
     return NextResponse.json({ error: "権限がありません" }, { status: 403 });
   }
 

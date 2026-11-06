@@ -4,14 +4,20 @@ service cloud.firestore {
   match /databases/{database}/documents {
 
     // 管理者 = admins/{uid} にドキュメントがあるユーザー
-    // （admins は Firebase コンソールからのみ追加する）
+    // role: "hanayasai" | "fruitshatake" | "all"（未設定は "all" 扱い。src/lib/adminRoles.ts と揃える）
+    // （admins の追加・削除は全体管理者が管理画面から行い、サーバー（Admin SDK）経由で書き込む）
     function isAdmin() {
       return request.auth != null
         && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
     }
 
+    function canManage(site) {
+      return isAdmin()
+        && get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.get('role', 'all') in [site, 'all'];
+    }
+
     match /admins/{uid} {
-      // 管理画面で自分が管理者かどうかの確認にのみ使う
+      // 管理画面で自分が管理者かどうか・種別の確認にのみ使う
       allow read: if request.auth != null && request.auth.uid == uid;
       allow write: if false;
     }
@@ -19,33 +25,33 @@ service cloud.firestore {
     // フルーツとやさい畑
     match /events/{eventId} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write: if canManage('fruitshatake');
     }
 
     match /announcements/{announcementId} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write: if canManage('fruitshatake');
     }
 
     // 参加申込は個人情報を含むため、書き込みはサーバー（Admin SDK）経由のみ
     match /event-registrations/{registrationId} {
-      allow read, write: if isAdmin();
+      allow read, write: if canManage('fruitshatake');
     }
 
     // 花野菜農園（下書きは管理者のみ閲覧可）
     match /hanayasaiEvents/{eventId} {
-      allow read: if resource.data.isPublished == true || isAdmin();
-      allow write: if isAdmin();
+      allow read: if resource.data.isPublished == true || canManage('hanayasai');
+      allow write: if canManage('hanayasai');
     }
 
     match /hanayasaiActivities/{activityId} {
-      allow read: if resource.data.isPublished == true || isAdmin();
-      allow write: if isAdmin();
+      allow read: if resource.data.isPublished == true || canManage('hanayasai');
+      allow write: if canManage('hanayasai');
     }
 
     match /hanayasaiActivitySections/{sectionId} {
-      allow read: if resource.data.isPublished == true || isAdmin();
-      allow write: if isAdmin();
+      allow read: if resource.data.isPublished == true || canManage('hanayasai');
+      allow write: if canManage('hanayasai');
     }
   }
 }

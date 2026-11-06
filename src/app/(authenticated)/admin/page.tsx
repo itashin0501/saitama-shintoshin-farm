@@ -5,9 +5,13 @@ import CampaignIcon from "@mui/icons-material/Campaign";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PhotoLibraryIcon from "@mui/icons-material/PhotoLibrary";
 import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import { useAdmin } from "@/components/admin/AdminContext";
+import { canAccessAdminPath } from "@/lib/adminRoles";
 
 export default function AdminDashboard() {
-  // hidden: true のメニューは管理画面TOPに表示しない（ページ自体は URL 直打ちで開ける）
+  const { role } = useAdmin();
+  // 管理者の種別で開けるメニューだけを表示する
   const menuItems = [
     {
       title: "イベント管理（フルーツとやさい畑）",
@@ -16,16 +20,14 @@ export default function AdminDashboard() {
       href: "/admin/events",
       color: "bg-blue-500",
       hoverColor: "hover:bg-blue-600",
-      hidden: true,
     },
     {
-      title: "お知らせ管理",
+      title: "お知らせ管理（フルーツとやさい畑）",
       description: "お知らせの作成、編集、削除が行えます",
       icon: <CampaignIcon className="text-4xl" />,
       href: "/admin/announcements",
       color: "bg-green-500",
       hoverColor: "hover:bg-green-600",
-      hidden: true,
     },
     {
       title: "花野菜農園 イベント",
@@ -43,7 +45,15 @@ export default function AdminDashboard() {
       color: "bg-yellow-500",
       hoverColor: "hover:bg-yellow-600",
     },
-  ];
+    {
+      title: "管理者ユーザー",
+      description: "管理者ユーザーの追加・削除、種別の変更が行えます",
+      icon: <ManageAccountsIcon className="text-4xl" />,
+      href: "/admin/users",
+      color: "bg-gray-600",
+      hoverColor: "hover:bg-gray-700",
+    },
+  ].filter((item) => canAccessAdminPath(role, item.href));
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -60,7 +70,7 @@ export default function AdminDashboard() {
 
       {/* メニューカード */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {menuItems.filter((item) => !item.hidden).map((item) => (
+        {menuItems.map((item) => (
           <Link
             key={item.href}
             href={item.href}
